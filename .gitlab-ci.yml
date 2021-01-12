@@ -1,17 +1,4 @@
-image: java:latest
-
-stages:
-  - build
-  - execute
+image: maven:3-jdk-11
 
 build:
-  stage: build
-  script: /usr/lib/jvm/java-8-openjdk-amd64/bin/java -jar target/choreos-server-1.0-runner.jar
-  artifacts:
-    paths:
-     - choreos-server-1.0-runner.*
-
-execute:
-  stage: execute
-  script: /usr/lib/jvm/java-8-openjdk-amd64/bin/java -jar target/choreos-server-1.0-runner.jar
-
+  script: "mvn install -B"
