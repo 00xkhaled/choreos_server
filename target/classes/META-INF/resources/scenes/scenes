@@ -1,0 +1,32 @@
+{
+  "Scene": {
+    "id": 1,
+    "name": "Scene1",
+    "description": "Hello this is Scene1",
+    "isActive": false
+  },
+  "Scene": {
+    "id": 2,
+    "name": "Scene2",
+    "description": "Hello this is Scene2",
+    "isActive": false
+  },
+  "Scene": {
+    "id": 3,
+    "name": "Scene3",
+    "description": "Hello this is Scene3",
+    "isActive": false
+  },
+  "Scene": {
+    "id": 4,
+    "name": "Scene4",
+    "description": "Hello this is Scene4",
+    "isActive": false
+  },
+  "Scene": {
+    "id": 5,
+    "name": "Scene5",
+    "description": "Hello this is Scene5",
+    "isActive": false
+  }
+}
