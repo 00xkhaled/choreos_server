@@ -27,7 +27,7 @@ build:
 deploy_staging:
   stage: deploy
   script:
-  - ssh root@167.99.254.202 "cd var/www/ && git pull && exit"
+  - ssh root@167.99.254.202 "cd /var/www/ && git pull && exit"
   environment:
     name: prod
     url: https://staging.example.com
