@@ -15,7 +15,7 @@ build:
 
 deploy_staging:
   stage: deploy
-  script: cd /var/wwww
+  script: java -jar /target/choreos-server-1.0-runner.jar &
 
   environment:
     name: staging
