@@ -1,3 +1,13 @@
+before_script:
+  - apt-get update -qq
+  - apt-get install -qq git
+  # Setup SSH deploy keys
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    
 image: maven:3-jdk-11
 
 stages:
@@ -15,10 +25,10 @@ build:
 
 deploy_staging:
   stage: deploy
-  script: java -jar /target/choreos-server-1.0-runner.jar &
-
+  script:
+  - ssh root@h167.99.254.202 "cd var/www/ && git pull && exit"
   environment:
-    name: staging
+    name: prod
     url: https://staging.example.com
   only:
     - master
