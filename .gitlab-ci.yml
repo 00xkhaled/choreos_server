@@ -15,9 +15,8 @@ build:
 
 deploy_staging:
   stage: deploy
-  script:
-    -  cd /var/wwww
-    - git pull
+  script: cd /var/wwww
+
   environment:
     name: staging
     url: https://staging.example.com
