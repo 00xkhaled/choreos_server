@@ -1,8 +1,10 @@
 package hsos.cho.srv.boundary.servlets;
 
+import hsos.cho.srv.boundary.adapter.HtmlAdapter;
 import hsos.cho.srv.control.LoginValidater;
 import hsos.cho.srv.properties.Settings;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +23,8 @@ import java.io.IOException;
 @WebServlet("/login")
 public class Login extends HttpServlet {
 
+    @Inject
+    HtmlAdapter adapter;
     /*
      * Returns Login-web-page
      * */
@@ -72,8 +76,7 @@ public class Login extends HttpServlet {
         //Check for NO LoginData (username/password) in Request
         if (username == null || password == null) {
             //true: send Login HTML Page
-            RequestDispatcher rd = req.getRequestDispatcher(Settings.loginHtml);
-            rd.forward(req, res);
+            res.getWriter().write(adapter.generateLoginHTML());
             return;
         }
 
@@ -89,9 +92,7 @@ public class Login extends HttpServlet {
         } else {
             //Username/Password incorrect -> try login again
             System.out.println("Login: doPost - wrong Logindata - try again");
-
-            RequestDispatcher rd = req.getRequestDispatcher(Settings.loginHtml);
-            rd.forward(req, res);
+            res.getWriter().write(adapter.generateLoginHTML());
         }
     }
 }

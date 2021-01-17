@@ -1,0 +1,11 @@
+hsos\cho\srv\boundary\servlets\DefaultDispatch.class
+hsos\cho\srv\boundary\servlets\Login.class
+hsos\cho\srv\properties\Settings.class
+hsos\cho\srv\control\LoginValidater.class
+hsos\cho\srv\entity\Scene.class
+hsos\cho\srv\control\SceneManager.class
+hsos\cho\srv\boundary\servlets\Setting.class
+hsos\cho\srv\boundary\rest\TicketResource.class
+hsos\cho\srv\boundary\sockets\ScenePublisher.class
+hsos\cho\srv\boundary\adapter\HtmlAdapter.class
+hsos\cho\srv\boundary\servlets\Controller.class

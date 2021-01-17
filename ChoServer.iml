@@ -174,5 +174,11 @@
     <orderEntry type="library" scope="TEST" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: jakarta.activation:jakarta.activation-api:1.2.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.sun.xml.bind:jaxb-impl:2.3.3" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: io.quarkus:quarkus-resteasy-qute:1.10.3.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.quarkus:quarkus-qute:1.10.3.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.quarkus.qute:qute-core:1.10.3.Final" level="project" />
   </component>
 </module>

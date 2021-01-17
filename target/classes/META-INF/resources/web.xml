@@ -29,6 +29,17 @@
         <url-pattern>/control</url-pattern>
     </servlet-mapping>
 
+    <!-- Ticket Servlet for updating Ticket Date and Ticket-Url -->
+    <servlet>
+        <servlet-name>settingServlet</servlet-name>
+        <servlet-class>java.hsos.cho.srv.boundary.servlets.Setting</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>settingServlet</servlet-name>
+        <url-pattern>/settings</url-pattern>
+    </servlet-mapping>
+
     <!-- Default: ControlServlet -->
     <servlet>
         <servlet-name>defaultDispatchServlet</servlet-name>

@@ -5,14 +5,13 @@ import hsos.cho.srv.entity.Scene;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 public class SceneManager {
@@ -25,12 +24,18 @@ public class SceneManager {
 
     private SceneManager() {
         scenes = new HashMap<>();
-        actSceneId = 0;
+        actSceneId = 1;
     }
 
     public void changeState(int id) {
+        scenes.get(actSceneId).switchIsActive(false);
         actSceneId = id;
+        scenes.get(actSceneId).switchIsActive(true);
         publishState();
+    }
+
+    public List<Scene> getScenesAsList(){
+        return new ArrayList<Scene>(scenes.values());
     }
 
     public Scene getCurrentScene() {
@@ -43,22 +48,16 @@ public class SceneManager {
 
     @PostConstruct
     public void initSceneManagerScenes() {
-       /*
-        try {
-            FileWriter writer = new FileWriter("\\resources\\META-INF\\resources\\scenes\\scenes.json");
-            System.out.println("File geoeffnet!");
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        */
+        for (int i = 1; i < 8; ++i) {
 
-        for (int i = 0; i <= 5; ++i) {
             Scene s = new Scene();
             s.setId(i);
             s.setName("Scene" + i);
-            s.setDescription("Description Scene" + i);
+            s.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros");
+
             scenes.put(s.getId(), s);
         }
+
     }
 }
 

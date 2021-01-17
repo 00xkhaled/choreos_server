@@ -1,5 +1,6 @@
 package hsos.cho.srv.boundary.servlets;
 
+import hsos.cho.srv.boundary.adapter.HtmlAdapter;
 import hsos.cho.srv.control.LoginValidater;
 import hsos.cho.srv.control.SceneManager;
 import hsos.cho.srv.properties.Settings;
@@ -16,6 +17,9 @@ public class Controller extends HttpServlet {
     @Inject
     SceneManager sceneManager;
 
+    @Inject
+    HtmlAdapter adapter;
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -30,8 +34,7 @@ public class Controller extends HttpServlet {
             return;
         }
 
-        RequestDispatcher rd = req.getRequestDispatcher(Settings.controllerHtml);
-        rd.forward(req, res);
+        res.getWriter().write(adapter.generateControlHTML());
     }
 
     @Override
@@ -50,12 +53,10 @@ public class Controller extends HttpServlet {
         if(req.getParameter(Settings.scene) != null) {
             String scene = req.getParameter(Settings.scene);
             int sceneId = Integer.parseInt(scene);
-            System.out.println(sceneId);
             sceneManager.changeState(sceneId);
         }
 
-        RequestDispatcher rd = req.getRequestDispatcher(Settings.controllerHtml);
-        rd.forward(req, res);
+        res.getWriter().write(adapter.generateControlHTML());
     }
 
     @Override
@@ -67,8 +68,8 @@ public class Controller extends HttpServlet {
 
         if(!proveValidation(session)){
             //true: Acces denied, going to Login
-            RequestDispatcher rd = req.getRequestDispatcher(Settings.loginHtml);
-            rd.forward(req, res);
+            res.getWriter().write(adapter.generateLoginHTML());
+            return;
         }
     }
 
@@ -76,7 +77,7 @@ public class Controller extends HttpServlet {
 
         LoginValidater validater = (LoginValidater)session.getAttribute(Settings.validater);
 
-        if(validater != null ) {
+        if(validater != null) {
             if (validater.isValidated()) return true;
         }
 

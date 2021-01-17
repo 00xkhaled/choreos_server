@@ -2,10 +2,8 @@ package hsos.cho.srv.boundary.sockets;
 
 import hsos.cho.srv.control.SceneManager;
 import hsos.cho.srv.entity.Scene;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.websocket.OnClose;
@@ -21,7 +19,6 @@ public class ScenePublisher {
 
     Map<String, Session> sessions = new ConcurrentHashMap<>();
 
-    //
     long sceneStartedAt = 0;
 
     @Inject

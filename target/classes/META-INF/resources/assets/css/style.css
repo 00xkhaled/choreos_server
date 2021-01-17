@@ -1,0 +1,80 @@
+body {
+    color: white;
+    font-family: 'Helvetica';
+}
+
+hr {
+    background-color: #ffffff;
+}
+
+a {
+    color: #ffffff;
+    font-family: 'Fira Sans';
+    opacity: 50%;
+}
+
+a:hover, aktiv {
+    color: white;
+    opacity: 100%;
+}
+
+h3 {
+    margin: 0;
+    display:inline;
+}
+
+.activ-page {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.jumbotron {
+    background-color: #173858;
+    border-radius: 0;
+    height: 100vh;
+}
+
+.page-header {
+    background-color: #173858;
+    opacity: 0.9;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-bottom-color: white;
+    border-bottom-style: solid;
+    border-radius: 1px;
+}
+
+.inactiv-scene {
+    background-color: #242424;
+    margin: 0.5%;
+    opacity: 0.8;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+.inactiv-scene:hover {
+    background-color: #242424;
+    margin: 0.5%;
+    opacity: 1;
+    transform: scale(1.01);
+}
+
+.activ-scene {
+    background-color: #28a745;
+    margin: 0.5%;
+    opacity: 1;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+label {
+    color: #ffffff;
+}
+
+.infobox p {
+    margin: 0%;
+}
+
+.breakline {
+    background-color: #ffffff;
+}

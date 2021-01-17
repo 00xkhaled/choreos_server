@@ -1,0 +1,16 @@
+{
+  "resources": [
+    {
+      "pattern": ".*\\.css$"
+    },
+    {
+      "pattern": ".*\\.json$"
+    },
+    {
+      "pattern": "style.css"
+    },
+    {
+      "pattern": ".*\\.css$"
+    }
+  ]
+}

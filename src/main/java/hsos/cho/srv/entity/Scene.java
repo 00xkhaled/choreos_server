@@ -5,10 +5,10 @@ public class Scene {
     private int id;
     private String name;
     private String description;
-    private boolean isActive;
+    private boolean isActiv;
 
     public Scene(){
-        this.isActive = false;
+        this.isActiv = false;
     }
 
     public int getId(){
@@ -25,7 +25,11 @@ public class Scene {
         return name;
     }
 
-    public boolean isActiv(){ return isActive; };
+    public boolean isActiv(){ return isActiv; };
+
+    public void switchIsActive(boolean b){
+        this.isActiv = b;
+    }
 
     public void setDescription(String d){
         this.description = d;
