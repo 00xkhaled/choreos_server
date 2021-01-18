@@ -29,7 +29,7 @@ build:
 deploy_staging:
   stage: deploy
   script:
-  - ssh root@167.99.254.202 "pkill -f 'java -jar' && cd /var/www/ && git pull && cd target && ls -la && java -jar choreos-server-1.0-runner.jar &"
+  - ssh root@167.99.254.202 "cd /var/www/ && sh deploy.sh"
   - ls -la
   environment:
     name: prod
