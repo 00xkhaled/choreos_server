@@ -29,9 +29,9 @@ build:
 deploy_staging:
   stage: deploy
   script:
-  - ssh root@167.99.254.202 "cd /var/www/ && git pull && cd target &&  java -jar choreos-server-1.0-runner.jar & "
+  - ssh root@167.99.254.202 "cd /var/www/ && git pull && cd target &&  pkill -f 'java -jar' && java -jar choreos-server-1.0-runner.jar & "
   environment:
     name: prod
-    url: https://staging.example.com
+    url: http://167.99.254.202:8080
   only:
     - master
