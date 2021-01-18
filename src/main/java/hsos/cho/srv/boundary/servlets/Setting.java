@@ -53,12 +53,21 @@ public class Setting extends HttpServlet {
         String ticketurl = req.getParameter("ticketurl");
         String date = req.getParameter("ticketdate");
 
-        if(ticketurl != null && date != null) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate ld = LocalDate.parse(date, dtf);
+        if(ticketurl != null || date != null) {
 
             Settings.ticketTicketUrl = ticketurl;
-            Settings.ticketTicketDate = ld;
+
+            try {
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate ld = LocalDate.parse(date, dtf);
+                Settings.ticketTicketDate = ld;
+            } catch (Exception e){
+                System.out.println("ERROR: Falsches Datum Format");
+                res.getWriter().write(adapter.generateSettingsHtml(false));
+                return;
+            }
+
+            Settings.ticketTicketUrl = ticketurl;
 
             res.getWriter().write(adapter.generateSettingsHtml(true));
             return;

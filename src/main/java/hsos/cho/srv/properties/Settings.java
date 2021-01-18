@@ -9,9 +9,9 @@ public class Settings {
 
     //SERVLETS
     public static final String loginServlet = "/login";
-    public static final String controllerServlet ="/control";
+    public static final String controllerServlet = "/control";
     public static final String settingServlet = "/settings";
-    public static final String defaultDispatchServlet="";
+    public static final String defaultDispatchServlet= "";
 
     //SESSION PARAMETER
     public static final String validater = "validater";

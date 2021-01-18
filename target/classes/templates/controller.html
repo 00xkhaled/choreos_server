@@ -48,13 +48,14 @@
 
             <script>
                 $('#scene{s.getId()}').click(function () {
+
                     $.post("{serverurl}",
                         {
                             scene: "{s.getId()}"
+                        }, function (data){
+                            location.reload();
                         }
                     );
-                    window.open("{serverurl}");
-                    window.close();
                 });
             </script>
 

@@ -51,26 +51,15 @@ public class Controller extends HttpServlet {
         }
 
         if(req.getParameter(Settings.scene) != null) {
-            String scene = req.getParameter(Settings.scene);
-            int sceneId = Integer.parseInt(scene);
-            sceneManager.changeState(sceneId);
+            try {
+                String scene = req.getParameter(Settings.scene);
+                int sceneId = Integer.parseInt(scene);
+                sceneManager.changeState(sceneId);
+            } catch(NumberFormatException e){
+                System.out.println("ERROR: Falsches Nummer-Format für Scene!");
+            }
         }
 
-        res.getWriter().write(adapter.generateControlHTML());
-    }
-
-    @Override
-    public void doPut(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        System.out.println("ControlServlet - doPut");
-
-        HttpSession session = req.getSession();
-
-        if(!proveValidation(session)){
-            //true: Acces denied, going to Login
-            res.getWriter().write(adapter.generateLoginHTML());
-            return;
-        }
     }
 
     public boolean proveValidation(HttpSession session){
