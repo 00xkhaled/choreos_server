@@ -48,7 +48,7 @@ public class SceneManager {
 
     @PostConstruct
     public void initSceneManagerScenes() {
-        for (int i = 1; i < 8; ++i) {
+        for (int i = 0; i < 8; ++i) {
 
             Scene s = new Scene();
             s.setId(i);
