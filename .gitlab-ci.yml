@@ -29,7 +29,7 @@ build:
 deploy_staging:
   stage: deploy
   script:
-  - ssh root@167.99.254.202 "ls -ls"
+  - ssh root@167.99.254.202 "ls -la"
   environment:
     name: prod
     url: http://167.99.254.202:8080
