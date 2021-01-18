@@ -22,12 +22,14 @@ test:
 
 build:
   stage: build
-  script: mvn install -B
+  script: 
+    - mvn install -B
+    - mvn package 
 
 deploy_staging:
   stage: deploy
   script:
-  - ssh root@167.99.254.202 "cd /var/www/ && git pull && exit"
+  - ssh root@167.99.254.202 "cd /var/www/ && git pull && cd target &&  java -jar choreos-server-1.0-runner.jar & exit"
   environment:
     name: prod
     url: https://staging.example.com
