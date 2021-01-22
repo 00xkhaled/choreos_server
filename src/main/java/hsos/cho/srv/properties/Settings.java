@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Settings {
     //SERVER URL
     //public static final String serverUrl = "http://localhost:8080";
-    public static String serverUrl = "http://167.99.254.202:8080";
+    public static String serverUrl = "http://46.101.138.15:8080";
 
     //SERVLETS
     public static final String loginServlet = "/login";

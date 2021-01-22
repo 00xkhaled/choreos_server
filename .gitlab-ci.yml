@@ -33,6 +33,6 @@ deploy_staging:
   - ls -la
   environment:
     name: prod
-    url: http://167.99.254.202:8080
+    url: http://46.101.138.15:8080
   only:
     - master
