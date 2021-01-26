@@ -32,6 +32,7 @@ public class ScenePublisher {
         int sceneId = sceneManager.getCurrentSceneId();
 
         long millisSceneRunning = System.currentTimeMillis() - this.sceneStartedAt;
+
         String message = "start" + " " + sceneId + " " + millisSceneRunning;
 
         session.getAsyncRemote().sendObject(message, result ->  {
