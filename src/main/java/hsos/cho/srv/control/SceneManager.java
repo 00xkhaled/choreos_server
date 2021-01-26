@@ -77,10 +77,9 @@ public class SceneManager {
     public void initSceneManagerScenes() {
 
         stop = new Scene();
-        stop.setId(100);
-        stop.setName("stop");
+        stop.setId(-1);
+        stop.setName("STOP");
         stop.setDescription("Stoppt die derzeit laufende Szene!");
-        //stop.switchIsActiveTo(true);
 
         for (int i = 0; i < 7; ++i) {
 
