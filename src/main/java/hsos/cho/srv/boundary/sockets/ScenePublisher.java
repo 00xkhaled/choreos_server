@@ -29,10 +29,10 @@ public class ScenePublisher {
         sessions.put(id, session);
         System.out.println(id  + " subscribed to ChoreosServer");
 
-        Scene scene = sceneManager.getCurrentScene();
+        int sceneId = sceneManager.getCurrentSceneId();
 
         long millisSceneRunning = System.currentTimeMillis() - this.sceneStartedAt;
-        String message = scene.getName() + " " + millisSceneRunning;
+        String message = "start" + " " + sceneId + " " + millisSceneRunning;
 
         session.getAsyncRemote().sendObject(message, result ->  {
             System.out.println("sending Message " + message);
@@ -54,18 +54,41 @@ public class ScenePublisher {
         System.out.println(id + " unsubscribed from ChoreosServer onError");
     }
 
-    public void publish(Scene scene) {
-        System.out.println("-----\nWebSocket - publish new scene:" + scene.getName());
-        System.out.println("Anzahl Sessions " + sessions.size());
+    public void publish(Scene previousScene, Scene currentScene) {
+
+        /*
+         * HIER WIRD ALTE NACHRICHT VERSENDET
+         */
+
+        System.out.println("-----------------------------------"
+                + "\nWebSocket - stopping previous Scene: "
+                + currentScene.getName());
+
+        String stopMessage = "stop";
+
+        sessions.values().forEach(s -> {
+            s.getAsyncRemote().sendObject(stopMessage, result ->  {
+                if (result.getException() != null) {
+                    System.out.println("Unable to send new State: " + result.getException());
+                }
+            });
+        });
+
+        /*
+        * HIER WIRD NEUE NACHRICHT VERSENDET
+        */
+
+        System.out.println("\nWebSocket - publish new scene:"
+                            + currentScene.getName());
+        System.out.println("Anzahl Sessions: " + sessions.size());
 
         this.sceneStartedAt = System.currentTimeMillis();
 
-        String message = scene.getName() + " " + 0;
+        String newMessage = currentScene.getName() + " " + 0;
 
         sessions.values().forEach(s -> {
-            System.out.println("Session MSG " +  message);
 
-            s.getAsyncRemote().sendObject(message, result ->  {
+            s.getAsyncRemote().sendObject(newMessage, result ->  {
                 if (result.getException() != null) {
                     System.out.println("Unable to send new State: " + result.getException());
                 }

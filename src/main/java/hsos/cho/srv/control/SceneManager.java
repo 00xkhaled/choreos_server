@@ -20,18 +20,27 @@ public class SceneManager {
     ScenePublisher publisher;
 
     private Map<Integer, Scene> scenes;
-    private int actSceneId;
+    private int previousSceneId;
+    private int currentSceneId;
 
     private SceneManager() {
         scenes = new HashMap<>();
-        actSceneId = 1;
+        previousSceneId = 0;
+        currentSceneId = 0;
     }
 
     public void changeState(int id) {
-        scenes.get(actSceneId).switchIsActive(false);
-        actSceneId = id;
-        scenes.get(actSceneId).switchIsActive(true);
+        scenes.get(currentSceneId).switchIsActive(false);
+        previousSceneId = currentSceneId;
+
+        currentSceneId = id;
+        scenes.get(currentSceneId).switchIsActive(true);
+
         publishState();
+    }
+
+    private void publishState() {
+        publisher.publish(scenes.get(previousSceneId), scenes.get(currentSceneId));
     }
 
     public List<Scene> getScenesAsList(){
@@ -39,11 +48,11 @@ public class SceneManager {
     }
 
     public Scene getCurrentScene() {
-        return scenes.get(actSceneId);
+        return scenes.get(currentSceneId);
     }
 
-    private void publishState() {
-        publisher.publish(scenes.get(actSceneId));
+    public int getCurrentSceneId() {
+        return currentSceneId;
     }
 
     @PostConstruct
