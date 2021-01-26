@@ -84,7 +84,7 @@ public class ScenePublisher {
 
         this.sceneStartedAt = System.currentTimeMillis();
 
-        String newMessage = currentScene.getName() + " " + 0;
+        String newMessage = "start" + " " + sceneManager.getCurrentSceneId() + " " + 0;
 
         sessions.values().forEach(s -> {
 
