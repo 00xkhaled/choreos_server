@@ -51,15 +51,23 @@ public class Controller extends HttpServlet {
         }
 
         if(req.getParameter(Settings.scene) != null) {
-            try {
-                String scene = req.getParameter(Settings.scene);
-                int sceneId = Integer.parseInt(scene);
-                sceneManager.changeState(sceneId);
-            } catch(NumberFormatException e){
-                System.out.println("ERROR: Falsches Nummer-Format für Scene!");
+            String scene = req.getParameter(Settings.scene);
+
+            if(scene.contentEquals("stop")){
+                System.out.println("stop eingegangen");
+                sceneManager.stopAllScenes();
+            }
+            else {
+                System.out.println("Scenenid eingegangen");
+                try {
+                    int sceneId = Integer.parseInt(scene);
+                    sceneManager.changeState(sceneId);
+
+                } catch (NumberFormatException e) {
+                    System.out.println("ERROR: Falsches Nummer-Format für Scene!");
+                }
             }
         }
-
     }
 
     public boolean proveValidation(HttpSession session){

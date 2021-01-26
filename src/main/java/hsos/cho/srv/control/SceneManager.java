@@ -6,6 +6,7 @@ import hsos.cho.srv.entity.Scene;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,34 +14,47 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ApplicationScoped
+@Singleton
 public class SceneManager {
 
     @Inject
     ScenePublisher publisher;
 
     private Map<Integer, Scene> scenes;
-    private int previousSceneId;
+    private Scene stop;
     private int currentSceneId;
 
     private SceneManager() {
         scenes = new HashMap<>();
-        previousSceneId = 0;
-        currentSceneId = 0;
+        currentSceneId = -1;
     }
 
     public void changeState(int id) {
-        scenes.get(currentSceneId).switchIsActive(false);
-        previousSceneId = currentSceneId;
+        if(currentSceneId != -1)
+            scenes.get(currentSceneId).switchIsActiveTo(false);
 
         currentSceneId = id;
-        scenes.get(currentSceneId).switchIsActive(true);
+        scenes.get(currentSceneId).switchIsActiveTo(true);
+
+        stop.switchIsActiveTo(true);
 
         publishState();
     }
 
     private void publishState() {
-        publisher.publish(scenes.get(previousSceneId), scenes.get(currentSceneId));
+        if(currentSceneId != -1)
+            publisher.publishScene(scenes.get(currentSceneId));
+    }
+
+    public void stopAllScenes(){
+        scenes.forEach((id, scene)-> {
+            scene.switchIsActiveTo(false);
+        });
+        currentSceneId = -1;
+
+        stop.switchIsActiveTo(false);
+
+        publisher.publishStop();
     }
 
     public List<Scene> getScenesAsList(){
@@ -48,16 +62,27 @@ public class SceneManager {
     }
 
     public Scene getCurrentScene() {
-        return scenes.get(currentSceneId);
+            return scenes.get(currentSceneId);
     }
 
     public int getCurrentSceneId() {
         return currentSceneId;
     }
 
+    public Scene getStop(){
+        return this.stop;
+    }
+
     @PostConstruct
     public void initSceneManagerScenes() {
-        for (int i = 0; i < 8; ++i) {
+
+        stop = new Scene();
+        stop.setId(100);
+        stop.setName("stop");
+        stop.setDescription("Stoppt die derzeit laufende Szene!");
+        //stop.switchIsActiveTo(true);
+
+        for (int i = 0; i < 7; ++i) {
 
             Scene s = new Scene();
             s.setId(i);
@@ -66,7 +91,6 @@ public class SceneManager {
 
             scenes.put(s.getId(), s);
         }
-
     }
 }
 

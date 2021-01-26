@@ -78,3 +78,24 @@ label {
 .breakline {
     background-color: #ffffff;
 }
+
+.stop {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.stop-inactiv {
+    background-color: crimson;
+    margin: 0.5%;
+    opacity: 0.6;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+.stop-activ {
+    background-color: crimson;
+    margin: 0.5%;
+    opacity: 1;
+    padding: 1%;
+    border-radius: 5px;
+}

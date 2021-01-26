@@ -26,6 +26,7 @@ public class HtmlAdapter {
     public String generateControlHTML() {
         return controllerPage.data("serverurl", Settings.controllerUrl)
                                 .data("scenes", sceneManager.getScenesAsList())
+                                .data("stop", sceneManager.getStop())
                                 .data("controllerurl", Settings.controllerUrl)
                                 .data("ticketsettingurl", Settings.ticketSettingsUrl)
                                 .render();

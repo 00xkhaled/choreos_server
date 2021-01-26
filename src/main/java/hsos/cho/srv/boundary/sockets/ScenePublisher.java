@@ -55,47 +55,47 @@ public class ScenePublisher {
         System.out.println(id + " unsubscribed from ChoreosServer onError");
     }
 
-    public void publish(Scene previousScene, Scene currentScene) {
-
-        /*
-         * HIER WIRD ALTE NACHRICHT VERSENDET
-         */
+    public void publishScene(Scene currentScene) {
 
         System.out.println("-----------------------------------"
-                + "\nWebSocket - stopping previous Scene: "
-                + currentScene.getName());
-
-        String stopMessage = "stop";
-
-        sessions.values().forEach(s -> {
-            s.getAsyncRemote().sendObject(stopMessage, result ->  {
-                if (result.getException() != null) {
-                    System.out.println("Unable to send new State: " + result.getException());
-                }
-            });
-        });
-
-        /*
-        * HIER WIRD NEUE NACHRICHT VERSENDET
-        */
-
-        System.out.println("\nWebSocket - publish new scene:"
+                            + "\nWebSocket - publish new scene:"
                             + currentScene.getName());
+
         System.out.println("Anzahl Sessions: " + sessions.size());
 
         this.sceneStartedAt = System.currentTimeMillis();
 
-        String newMessage = "start" + " " + sceneManager.getCurrentSceneId() + " " + 0;
+        String message = "start" + " " + sceneManager.getCurrentSceneId() + " " + 0;
 
         sessions.values().forEach(s -> {
-
-            s.getAsyncRemote().sendObject(newMessage, result ->  {
+            s.getAsyncRemote().sendObject(message, result ->  {
                 if (result.getException() != null) {
                     System.out.println("Unable to send new State: " + result.getException());
                 }
             });
         });
 
-        System.out.println("-----");
+        System.out.println("-----------------------------------");
+    }
+
+    public void publishStop() {
+
+        System.out.println("-----------------------------------"
+                + "\nWebSocket - STOP:");
+        System.out.println("Anzahl Sessions: " + sessions.size());
+
+        this.sceneStartedAt = System.currentTimeMillis();
+
+        String message = "stop";
+
+        sessions.values().forEach(s -> {
+            s.getAsyncRemote().sendObject(message, result ->  {
+                if (result.getException() != null) {
+                    System.out.println("Unable to send new State: " + result.getException());
+                }
+            });
+        });
+
+        System.out.println("-----------------------------------");
     }
 }

@@ -27,7 +27,7 @@ public class Scene {
 
     public boolean isActiv(){ return isActiv; };
 
-    public void switchIsActive(boolean b){
+    public void switchIsActiveTo(boolean b){
         this.isActiv = b;
     }
 
