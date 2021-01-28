@@ -1,12 +1,20 @@
 package hsos.cho.srv.control;
 
-import javax.enterprise.context.RequestScoped;
+import hsos.cho.srv.properties.Properties;
+import io.quarkus.arc.config.ConfigProperties;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-@RequestScoped
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+
 public class LoginValidater {
-    //Constant login variables
-    private final String username = "admin";
-    private final String password = "password";
+
+    @ConfigProperty(name = "loginusername")
+    private String username = "choreos";
+
+    @ConfigProperty(name = "loginpassword")
+    private String password = "choreos";
 
     //Status Validation
     private boolean validated = false;
@@ -16,9 +24,7 @@ public class LoginValidater {
     /*
      * default Constructor
      * */
-    public LoginValidater ()
-    {
-        super();
+    public LoginValidater (){
         loginTry = 0;
     }
 
@@ -27,6 +33,7 @@ public class LoginValidater {
      * */
     public void validate(String uname, String pword)
     {
+        System.out.println("un: " + username + " pw: " + password);
 
         if( uname.contentEquals(username) && pword.contentEquals(password) )
         {

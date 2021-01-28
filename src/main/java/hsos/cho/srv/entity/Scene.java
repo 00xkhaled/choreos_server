@@ -2,6 +2,7 @@ package hsos.cho.srv.entity;
 
 public class Scene {
 
+    private static int idCounter = -1;
     private int id;
     private String name;
     private String description;
@@ -11,14 +12,15 @@ public class Scene {
         this.isActiv = false;
     }
 
-    public int getId(){
-        return id;
+    public Scene(int id, String name, String description){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.isActiv = false;
     }
 
-    public void setId(int id) { this.id = id; }
-
-    public void setName(String name){
-        this.name = name;
+    public int getId(){
+        return id;
     }
 
     public String getName(){

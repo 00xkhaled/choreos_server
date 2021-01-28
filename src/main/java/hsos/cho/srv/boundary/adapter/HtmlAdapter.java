@@ -1,11 +1,12 @@
 package hsos.cho.srv.boundary.adapter;
 
 import hsos.cho.srv.control.SceneManager;
-import hsos.cho.srv.properties.Settings;
+import hsos.cho.srv.properties.Properties;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.api.ResourcePath;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import org.jboss.logging.Logger;
 
 
 @ApplicationScoped
@@ -13,6 +14,9 @@ public class HtmlAdapter {
 
     @Inject
     SceneManager sceneManager;
+
+    @Inject
+    Properties properties;
 
     @ResourcePath("controller.html")
     Template controllerPage;
@@ -24,25 +28,28 @@ public class HtmlAdapter {
     Template settingsPage;
 
     public String generateControlHTML() {
-        return controllerPage.data("serverurl", Settings.controllerUrl)
+        //log.trace("HtmlAdapter - generateControlHTML");
+
+        return controllerPage.data("serverurl", properties.serverurl)
                                 .data("scenes", sceneManager.getScenesAsList())
                                 .data("stop", sceneManager.getStop())
-                                .data("controllerurl", Settings.controllerUrl)
-                                .data("ticketsettingurl", Settings.ticketSettingsUrl)
                                 .render();
     }
 
-    public String generateLoginHTML(){
-        return loginPage.data("serverurl", Settings.loginUrl)
+    public String generateLoginHTML(boolean reTry){
+        //log.trace("HtmlAdapter - generateLoginHTML");
+
+        return loginPage.data("serverurl", properties.serverurl)
+                            .data("retry", reTry)
                             .render();
     }
 
     public String generateSettingsHtml(boolean changedSettings){
+        //log.trace("HtmlAdapter - generateSettingsHTML");
 
-        return settingsPage.data("controllerurl", Settings.controllerUrl)
-                            .data("ticketurl", Settings.ticketTicketUrl)
-                            .data("ticketsettingsurl", Settings.ticketSettingsUrl)
-                            .data("date", Settings.ticketTicketDate)
+        return settingsPage.data("serverurl", properties.serverurl)
+                            .data("ticketurl", properties.ticketTicketUrl)
+                            .data("date", properties.ticketTicketDate)
                             .data("changedSettings", changedSettings)
                             .render();
     }

@@ -1,15 +1,21 @@
 body {
     color: white;
-    font-family: 'Helvetica';
+    font-family: 'Calibri Light';
+    font-size: 1em;
 }
 
 hr {
     background-color: #ffffff;
 }
 
+h5 {
+font-family: "Arial";
+}
+
 a {
     color: #ffffff;
-    font-family: 'Fira Sans';
+    font-family: 'Arial';
+    font-size: 1.2em;
     opacity: 50%;
 }
 
@@ -95,7 +101,7 @@ label {
 .stop-activ {
     background-color: crimson;
     margin: 0.5%;
-    opacity: 1;
+    opacity: 0.9;
     padding: 1%;
     border-radius: 5px;
 }

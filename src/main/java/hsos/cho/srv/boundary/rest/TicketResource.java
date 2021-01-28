@@ -1,6 +1,6 @@
 package hsos.cho.srv.boundary.rest;
 
-import hsos.cho.srv.properties.Settings;
+import hsos.cho.srv.properties.Properties;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
@@ -10,12 +10,12 @@ public class TicketResource {
     @GET
     @Path("ticketurl")
     public String getTicketUrl(){
-        return Settings.ticketTicketUrl;
+        return Properties.ticketTicketUrl;
     }
 
     @GET
     @Path("date")
     public String getTicketDate(){
-        return Settings.ticketTicketDate.toString();
+        return Properties.ticketTicketDate.toString();
     }
 }

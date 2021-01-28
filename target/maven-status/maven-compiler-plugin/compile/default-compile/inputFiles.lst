@@ -1,11 +1,12 @@
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\adapter\HtmlAdapter.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\servlets\Login.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\control\LoginValidater.java
+C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\properties\Properties.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\entity\Scene.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\rest\TicketResource.java
-C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\servlets\Setting.java
-C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\properties\Settings.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\control\SceneManager.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\sockets\ScenePublisher.java
+C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\servlets\Settings.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\servlets\DefaultDispatch.java
+C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\properties\SceneConfiguration.java
 C:\Users\grewe\CHOREOS\choreos\src\main\java\hsos\cho\srv\boundary\servlets\Controller.java

@@ -32,7 +32,7 @@
     <!-- Ticket Servlet for updating Ticket Date and Ticket-Url -->
     <servlet>
         <servlet-name>settingServlet</servlet-name>
-        <servlet-class>java.hsos.cho.srv.boundary.servlets.Setting</servlet-class>
+        <servlet-class>java.hsos.cho.srv.boundary.servlets.Settings</servlet-class>
     </servlet>
 
     <servlet-mapping>

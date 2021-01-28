@@ -1,7 +1,10 @@
 package hsos.cho.srv.boundary.sockets;
 
+import hsos.cho.srv.boundary.servlets.Controller;
 import hsos.cho.srv.control.SceneManager;
 import hsos.cho.srv.entity.Scene;
+import org.jboss.logging.Logger;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.enterprise.context.ApplicationScoped;
@@ -17,17 +20,19 @@ import javax.websocket.Session;
 @ServerEndpoint("/subscribe/{userId}")
 public class ScenePublisher {
 
+    @Inject
+    SceneManager sceneManager;
+
     Map<String, Session> sessions = new ConcurrentHashMap<>();
 
     long sceneStartedAt = 0;
 
-    @Inject
-    SceneManager sceneManager;
+    private static final Logger log = Logger.getLogger(ScenePublisher.class.getName());
 
     @OnOpen
     public void onOpen(Session session, @PathParam("userId") String id) {
         sessions.put(id, session);
-        System.out.println(id  + " subscribed to ChoreosServer");
+        log.debug("USER: " + id + " SUBSCRIBED TO SOCKET");
 
         int sceneId = sceneManager.getCurrentSceneId();
 
@@ -46,22 +51,17 @@ public class ScenePublisher {
     @OnClose
     public void onClose(Session session, @PathParam("userId") String id) {
         sessions.remove(id);
-        System.out.println(id + " unsubscribed from ChoreosServer");
+        log.debug("USER: " + id + " UNSUBSCRIBED FROM SOCKET");
     }
 
     @OnError
     public void onError(Session session, @PathParam("userId") String id, Throwable throwable) {
         sessions.remove(id);
-        System.out.println(id + " unsubscribed from ChoreosServer onError");
+        log.debug("USER: " + id + " UNSUBSCRIBED FROM SOCKET ON ERROR");
     }
 
     public void publishScene(Scene currentScene) {
-
-        System.out.println("-----------------------------------"
-                            + "\nWebSocket - publish new scene:"
-                            + currentScene.getName());
-
-        System.out.println("Anzahl Sessions: " + sessions.size());
+        log.info("Publish Scene " + currentScene.getName() + " with ID " + currentScene.getId() + " to " + sessions.size() + " Sessions");
 
         this.sceneStartedAt = System.currentTimeMillis();
 
@@ -74,15 +74,10 @@ public class ScenePublisher {
                 }
             });
         });
-
-        System.out.println("-----------------------------------");
     }
 
     public void publishStop() {
-
-        System.out.println("-----------------------------------"
-                + "\nWebSocket - STOP:");
-        System.out.println("Anzahl Sessions: " + sessions.size());
+        log.info("Publish Scene \"stop\" with ID -1 to " + sessions.size() + " Sessions!");
 
         this.sceneStartedAt = System.currentTimeMillis();
 
@@ -95,7 +90,5 @@ public class ScenePublisher {
                 }
             });
         });
-
-        System.out.println("-----------------------------------");
     }
 }

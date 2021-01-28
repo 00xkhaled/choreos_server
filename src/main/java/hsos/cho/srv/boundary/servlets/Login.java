@@ -2,7 +2,8 @@ package hsos.cho.srv.boundary.servlets;
 
 import hsos.cho.srv.boundary.adapter.HtmlAdapter;
 import hsos.cho.srv.control.LoginValidater;
-import hsos.cho.srv.properties.Settings;
+import hsos.cho.srv.properties.Properties;
+import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -25,25 +26,32 @@ public class Login extends HttpServlet {
 
     @Inject
     HtmlAdapter adapter;
+
+    @Inject
+    Properties properties;
+
+    private static final Logger log = Logger.getLogger(Login.class.getName());
+
     /*
      * Returns Login-web-page
      * */
     public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        System.out.println("LoginServlet: doGet()");
 
         //Get actual HttpSession
         HttpSession session = req.getSession();
 
-        //initialize LoginValidater for HttpSession
-        if (session.getAttribute(Settings.validater) == null)
-            session.setAttribute(Settings.validater, new LoginValidater());
+        //initialize LoginValidater for new HttpSession
+        if (session.getAttribute(properties.validater) == null)
+            session.setAttribute(properties.validater, new LoginValidater());
 
         //Get LoginValidater for actual Session
-        LoginValidater val = (LoginValidater) session.getAttribute(Settings.validater);
+        LoginValidater val = (LoginValidater) session.getAttribute(properties.validater);
 
         //if Session is already validated
-        if (val.isValidated()) res.sendRedirect(Settings.controllerServlet);
+        if (val.isValidated()){
+            res.sendRedirect(properties.controllerservlet);
+        }
 
         //got To LoginServlet Post-Method
         doPost(req, res);
@@ -59,24 +67,22 @@ public class Login extends HttpServlet {
      * */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        System.out.println("LoginServlet: doPost()");
-
         //Get actual HttpSession
         HttpSession session = req.getSession();
 
         //initialize LoginValidater for HttpSession
-        if (session.getAttribute(Settings.validater) == null)
-            session.setAttribute(Settings.validater, new LoginValidater());
+        if (session.getAttribute(properties.validater) == null)
+            session.setAttribute(properties.validater, new LoginValidater());
 
         //Get Login Data from Request
-        LoginValidater validater = (LoginValidater)session.getAttribute(Settings.validater);
+        LoginValidater validater = (LoginValidater)session.getAttribute(properties.validater);
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         //Check for NO LoginData (username/password) in Request
         if (username == null || password == null) {
             //true: send Login HTML Page
-            res.getWriter().write(adapter.generateLoginHTML());
+            res.getWriter().write(adapter.generateLoginHTML(false));
             return;
         }
 
@@ -85,14 +91,13 @@ public class Login extends HttpServlet {
 
         if (validater.isValidated()) {
             //Username/Password correct, go to Controller Servlet
-            System.out.println("Login: doPost - isValidated");
-
-            RequestDispatcher rd = req.getRequestDispatcher(Settings.controllerServlet);
-            res.sendRedirect(Settings.controllerServlet);
+            log.info("ACCESS ALLOWED");
+            RequestDispatcher rd = req.getRequestDispatcher(properties.controllerservlet);
+            res.sendRedirect(properties.controllerservlet);
         } else {
             //Username/Password incorrect -> try login again
-            System.out.println("Login: doPost - wrong Logindata - try again");
-            res.getWriter().write(adapter.generateLoginHTML());
+            log.info("ACCESS DENIED - Wrong username/password");
+            res.getWriter().write(adapter.generateLoginHTML(true));
         }
     }
 }

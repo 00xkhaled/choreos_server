@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dreams(e)scapes</title>
+    <title>Choreos - Controller</title>
 
     <!-- Bootstrap Stylesheet -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -14,6 +14,9 @@
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Favivon -->
+    <link rel="icon" href="assets/img/choreos-favicon.png" type="image/png">
 </head>
 
 <body>
@@ -21,7 +24,7 @@
 <div class="page-header">
     <div class="container">
         <img src="assets/img/choreos_logo.png">
-        <a class="nav-item nav-link float-right" href="{ticketsettingurl}">Einstellungen</a>
+        <a class="nav-item nav-link float-right" href="{serverurl}/settings">Einstellungen</a>
         <a class="nav-item nav-link float-right activ-page" href="">Szenen-Controller</a>
     </div>
 </div>
@@ -39,10 +42,11 @@
                 <p>{stop.getDescription()}</p>
             </div>
 
+            {#if stop.isActiv()}
             <script>
                 $('#stopScene').click(function () {
 
-                    $.post("{serverurl}",
+                    $.post("{serverurl}/control",
                         {
                             scene: "stop"
                         }, function (data){
@@ -51,6 +55,7 @@
                     );
                 });
             </script>
+            {/if}
 
             {#for s in scenes}
 
@@ -70,7 +75,7 @@
              <script>
               $('#scene{s.getId()}').click(function () {
 
-              $.post("{serverurl}", {
+              $.post("{serverurl}/control", {
                     scene: "{s.getId()}"
                         }, function (data){
                             location.reload();
@@ -82,9 +87,8 @@
             {#if count == 2} </div> {/if}
             {#if count == 5} </div> {/if}
             {#if count == 8} </div> {/if}
-            {#if count == scenes.size} </div> {/if}
+            {#if count == scenes.size} <hr> </div> {/if}
             {/for}
-            <hr>
         </div> <!-- END -->
 
     </div><!-- END -->
