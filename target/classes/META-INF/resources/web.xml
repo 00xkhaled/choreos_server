@@ -7,10 +7,10 @@
         <welcome-fie>Controller</welcome-fie>
     </welcome-file-list>
 
-    <!-- Login Servlet for Controller Servlet Access -->
+    <!-- LoginServlet Servlet for ControllerServlet Servlet Access -->
     <servlet>
         <servlet-name>loginServlet</servlet-name>
-        <servlet-class>java.hsos.cho.srv.boundary.servlets.Login</servlet-class>
+        <servlet-class>java.hsos.cho.srv.login.boundary.LoginServletServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -21,7 +21,7 @@
     <!-- Control Servlet to update the States -->
     <servlet>
         <servlet-name>controlServlet</servlet-name>
-        <servlet-class>java.hsos.cho.srv.boundary.servlets.Controller</servlet-class>
+        <servlet-class>java.hsos.cho.srv.scenes.boundary.ControllerServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -32,7 +32,7 @@
     <!-- Ticket Servlet for updating Ticket Date and Ticket-Url -->
     <servlet>
         <servlet-name>settingServlet</servlet-name>
-        <servlet-class>java.hsos.cho.srv.boundary.servlets.Settings</servlet-class>
+        <servlet-class>java.hsos.cho.srv.settings.boundary.servlets.Settings</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -43,7 +43,7 @@
     <!-- Default: ControlServlet -->
     <servlet>
         <servlet-name>defaultDispatchServlet</servlet-name>
-        <servlet-class>java.hsos.cho.srv.boundary.servlets.DefaultDispatch</servlet-class>
+        <servlet-class>java.hsos.cho.srv.login.boundary.DefaultDispatchServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -51,6 +51,19 @@
         <url-pattern></url-pattern>
     </servlet-mapping>
 
+    <!-- FeedbackServlet -->
+    <servlet>
+        <servlet-name>loginServlet</servlet-name>
+        <servlet-class>java.hsos.cho.srv.feedback.boundary.FeedbackServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>loginServlet</servlet-name>
+        <url-pattern>/feedback</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Servlet Configuration -->
     <session-config>
         <session-timeout>60</session-timeout>
     </session-config>
