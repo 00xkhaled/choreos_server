@@ -2,11 +2,11 @@ package hsos.cho.srv.feedback.control;
 
 import hsos.cho.srv.feedback.entity.Feedback;
 
-import javax.enterprise.context.ApplicationScoped;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
-@ApplicationScoped
-public class FeedbackManager {
-    private Map<String, Feedback> feedbacks = new ConcurrentHashMap<>();
+public interface FeedbackManager {
+    public List<Feedback> getFeedbacksAsList();
+    public void addFeedback(String text);
+    public void deleteFeedback(long id);
+    public void deleteAllFeedbacks();
 }

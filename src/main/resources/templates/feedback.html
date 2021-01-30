@@ -19,6 +19,9 @@
     <!-- JQuery -->
     <script src="assets/js/jquery.js"></script>
 
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
     <!-- Favivon -->
     <link rel="icon" href="assets/img/choreos-favicon.png" type="image/png">
 </head>
@@ -36,7 +39,55 @@
     <div class="jumbotron">
         <div class="container">
             <h5>Feedback</h5>
+            <button id="feedback" class="btn btn-success">Feedback geben</button>
+
+            <script>
+                $('#feedback').click(function () {
+
+                    $.post("{serverurl}/feedback", {
+                            feedbacktext: "Hi du da, das ist ein Feeeedback!"
+                        }, function (data){
+                            location.reload();
+                        }
+                    );
+                });
+            </script>
+
             <hr>
+            {#if feedbacks.size == 0}
+                <p>Es ist leider noch kein Feedback eingetroffen!</p>
+            {/if}
+
+
+            {#for feedback in feedbacks}
+            <div class="card">
+                <div class="card-header">
+                    Zuschauer vom {feedback.getDate()}
+                    <div class="float-right">
+                        <i id="deletefb{feedback.getId()}" class="trash-icon far fa-trash-alt"></i></a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>{feedback.getText()}</p>
+                    </blockquote>
+                </div>
+            </div>
+
+            <script>
+                $('#deletefb{feedback.getId()}').click(function () {
+                    $.ajax({
+                        url: '{serverurl}/feedback',
+                        type: 'DELETE',
+                        data: { id: '{feedback.getId()}'},
+                        success: function(result) {
+                            location.reload();
+                        }
+                    });
+                });
+            </script>
+
+            {/for}
         </div>
     </div>
 </body>

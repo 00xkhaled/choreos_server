@@ -1,5 +1,6 @@
 package hsos.cho.srv.feedback.adapter;
 
+import hsos.cho.srv.feedback.control.FeedbackManager;
 import hsos.cho.srv.settings.entity.Properties;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.api.ResourcePath;
@@ -14,10 +15,14 @@ public class FeedbackHtmlAdapter {
     Template feedbackPage;
 
     @Inject
+    FeedbackManager feedbackManager;
+
+    @Inject
     Properties properties;
 
     public String generateFeedbackHtml(){
         return feedbackPage.data("serverurl", properties.serverurl)
+                .data("feedbacks", feedbackManager.getFeedbacksAsList())
                 .render();
     }
 }

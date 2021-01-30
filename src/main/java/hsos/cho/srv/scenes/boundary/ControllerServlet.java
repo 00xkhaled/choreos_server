@@ -59,13 +59,13 @@ public class ControllerServlet extends HttpServlet {
             String scene = req.getParameter(Properties.scene);
 
             if(scene.contentEquals("stop")){
-                log.info("SCENE CHANGED - STOP");
+                log.info("SCENE SWITCHED - STOP");
                 sceneManager.stopAllScenes();
             }
             else {
                 try {
                     int sceneId = Integer.parseInt(scene);
-                    log.info("SCENE CHANGED - SCENE" + sceneId);
+                    log.info("SCENE SWITCHED - SCENE" + sceneId);
                     sceneManager.changeState(sceneId);
 
                 } catch (NumberFormatException e) {

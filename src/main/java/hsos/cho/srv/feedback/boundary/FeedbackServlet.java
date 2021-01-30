@@ -1,11 +1,10 @@
 package hsos.cho.srv.feedback.boundary;
 
 import hsos.cho.srv.feedback.adapter.FeedbackHtmlAdapter;
+import hsos.cho.srv.feedback.control.FeedbackManager;
 import hsos.cho.srv.login.entity.LoginValidater;
-import hsos.cho.srv.scenes.boundary.ControllerServlet;
 import hsos.cho.srv.settings.entity.Properties;
 import org.jboss.logging.Logger;
-
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +21,10 @@ public class FeedbackServlet extends HttpServlet {
     private Properties properties;
 
     @Inject
-    FeedbackHtmlAdapter adapter;
+    private FeedbackHtmlAdapter adapter;
+
+    @Inject
+    private FeedbackManager feedbackManager;
 
     private static final Logger log = Logger.getLogger(FeedbackServlet.class.getSimpleName());
 
@@ -38,7 +40,6 @@ public class FeedbackServlet extends HttpServlet {
         }
 
         res.getWriter().write(adapter.generateFeedbackHtml());
-
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -52,6 +53,10 @@ public class FeedbackServlet extends HttpServlet {
             log.info("ACCESS DENIED");
         }
 
+        if(req.getParameter("feedbacktext")!= null){
+            String feedbacktext = req.getParameter("feedbacktext");
+            feedbackManager.addFeedback(feedbacktext);
+        }
     }
 
     public void doDelete(HttpServletRequest req, HttpServletResponse res)
@@ -63,6 +68,11 @@ public class FeedbackServlet extends HttpServlet {
             //true: Acces denied, going to LoginServlet
             res.sendRedirect(properties.loginservlet);
             log.info("ACCESS DENIED");
+        }
+
+        if(req.getParameter("id") != null){
+            long id = Long.parseLong(req.getParameter("id"));
+            feedbackManager.deleteFeedback(id);
         }
     }
 

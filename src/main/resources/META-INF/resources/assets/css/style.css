@@ -1,6 +1,6 @@
 body {
-    color: white;
-    font-family: 'Calibri Light';
+    color: black;
+    font-family: 'Arial';
     font-size: 1em;
 }
 
@@ -9,13 +9,13 @@ hr {
 }
 
 h5 {
-font-family: "Arial";
+    font-family: "Arial";
 }
 
 a {
     color: #ffffff;
     font-family: 'Arial';
-    font-size: 0.9em;
+    font-size: 1em;
     opacity: 50%;
 }
 
@@ -35,14 +35,15 @@ h3 {
 }
 
 .jumbotron {
-    background-color: #173858;
+    background-color: #bfbfbf;
+    opacity: 1;
     border-radius: 0;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .page-header {
-    background-color: #173858;
-    opacity: 0.9;
+    background-color: #242424;
+    opacity: 1;
     padding-top: 1%;
     padding-bottom: 1%;
     border-bottom-color: white;
@@ -53,7 +54,7 @@ h3 {
 .inactiv-scene {
     background-color: #242424;
     margin: 0.5%;
-    opacity: 0.8;
+    opacity: 0.9;
     padding: 1%;
     border-radius: 5px;
 }
@@ -66,16 +67,14 @@ h3 {
 }
 
 .activ-scene {
-    background-color: #28a745;
+    background-color: #2a6426;
     margin: 0.5%;
     opacity: 1;
     padding: 1%;
     border-radius: 5px;
 }
 
-label {
-    color: #ffffff;
-}
+
 
 .infobox p {
     margin: 0%;
@@ -91,7 +90,7 @@ label {
 }
 
 .stop-inactiv {
-    background-color: crimson;
+    background-color: #b61b1b;
     margin: 0.5%;
     opacity: 0.6;
     padding: 1%;
@@ -99,9 +98,43 @@ label {
 }
 
 .stop-activ {
-    background-color: crimson;
+    background-color: #b61b1b;
     margin: 0.5%;
     opacity: 0.9;
     padding: 1%;
     border-radius: 5px;
 }
+
+.card {
+    background-color: #242424;
+    opacity: 0.9;
+    margin-bottom: 1em;
+}
+
+.card-header {
+    opacity: 1;
+}
+
+.card-body {
+    opacity: 1;
+}
+.card-body p {
+    opacity: 1;
+}
+
+.trash-icon {
+    fill: white;
+}
+
+.trash-icon:hover {
+    fill: white;
+    transform: scale(1.2);
+}
+
+.row {
+    color: white;
+}
+.card {
+    color:white;
+}
+
