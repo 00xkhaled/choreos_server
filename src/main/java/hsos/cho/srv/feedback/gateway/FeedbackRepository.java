@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,8 +28,20 @@ public class FeedbackRepository implements FeedbackManager {
     @Override
     @Transactional(value = Transactional.TxType.REQUIRED)
     public List<Feedback> getFeedbacksAsList() {
-        Query query = em.createQuery("SElECT e FROM Feedback e");
-        return query.getResultList();
+        Query query = em.createQuery("SElECT e FROM Feedback e ORDER BY date");
+
+        List<Feedback> list = new ArrayList<>();
+
+        for(Object f : query.getResultList()){
+            list.add(((Feedback)f).clone());
+        }
+
+        for(Object f : query.getResultList()){
+            if(((Feedback)f).getWasSeen() == false)
+                setFeedbackAsSeen(((Feedback)f).getId());
+        }
+
+        return list;
     }
 
     @Override
@@ -51,5 +64,13 @@ public class FeedbackRepository implements FeedbackManager {
     public void deleteAllFeedbacks() {
         log.info("ALL FEEDBACKS DELETED");
         em.createQuery("DELETE FROM Feedback").executeUpdate();
+    }
+
+    @Transactional(value = Transactional.TxType.REQUIRED)
+    public void setFeedbackAsSeen(long id) {
+        log.info("FEEDBACKS " + id + " MAREKD AS SEEN");
+        Feedback fb = em.find(Feedback.class, id);
+        fb.setWasSeen(true);
+        em.merge(fb);
     }
 }

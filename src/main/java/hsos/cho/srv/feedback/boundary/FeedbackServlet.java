@@ -47,14 +47,9 @@ public class FeedbackServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        if(!proveValidation(session)){
-            //true: Acces denied, going to LoginServlet
-            res.sendRedirect(properties.loginservlet);
-            log.info("ACCESS DENIED");
-        }
+        String feedbacktext = req.getParameter("feedbacktext");
 
-        if(req.getParameter("feedbacktext")!= null){
-            String feedbacktext = req.getParameter("feedbacktext");
+        if(feedbacktext != null){
             feedbackManager.addFeedback(feedbacktext);
         }
     }

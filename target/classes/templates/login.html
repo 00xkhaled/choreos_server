@@ -21,6 +21,7 @@
 
     <!-- JQuery -->
     <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/md5.js"></script>
 
     <!-- Favivon -->
     <link rel="icon" href="assets/img/choreos-favicon.png" type="image/png">
@@ -43,22 +44,39 @@
         </div><br><br>
         {/if}
 
-        <form class="form-signin" action="{serverurl}/login" method="POST">
-            <div class="form-group">
-                <h5>Login</h5>  <hr>
-                <label>Name</label>
-                <input type="text" class="form-control" name="username" placeholder="username" value="choreos"><br>
-                <label>Passwort</label>
-                <input type="password" class="form-control" name="password" placeholder="passwort" value="choreos"><br><hr>
-                <button type="submit" class="btn btn-success float-right">Login</button>
+        <div class="row justify-content-center align-items">
+            <div class="col-md-6">
+                <!--
+                <form class="form-signin" action="{serverurl}/login" method="POST">
+                    -->
+                <form id="loginform" class="form-signin" method="POST">
+                    <h5>Login</h5>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input id="username" type="text" class="form-control" name="username" placeholder="username" value="choreos"><br>
+                        <label>Passwort</label>
+                        <input id="password" type="password" class="form-control" name="password" placeholder="passwort" value="choreos"><br>
+                        <button id="loginbutton" type="button" class="btn btn-success float-right">Login</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
 
         <script>
+            $('#loginbutton').click(function () {
+                var un = document.getElementById('username').value
+                var pw = document.getElementById('password').value;
 
-            function senSigninData(){
+                $.post("{serverurl}/login", {
+                        username: un,
+                        password: MD5(pw)
+                    }, function (data){
+                        location.reload();
+                    }
+                );
 
-            }
+
+            });
 
         </script>
 

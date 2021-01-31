@@ -55,15 +55,17 @@
 
             <hr>
             {#if feedbacks.size == 0}
-                <p>Es ist leider noch kein Feedback eingetroffen!</p>
+                <p><b>Es ist leider noch kein Feedback eingetroffen!</b></p>
             {/if}
 
 
             {#for feedback in feedbacks}
             <div class="card">
                 <div class="card-header">
-                    Zuschauer vom {feedback.getDate()}
+
+                    Zuschauer am {feedback.getDateAsString()}, Nr. {feedback.getId() }
                     <div class="float-right">
+                        {#if feedback.getWasSeen() == false } <b>NEU! &nbsp </b>{/if}
                         <i id="deletefb{feedback.getId()}" class="trash-icon far fa-trash-alt"></i></a>
                     </div>
                 </div>

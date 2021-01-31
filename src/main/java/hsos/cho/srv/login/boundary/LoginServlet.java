@@ -53,8 +53,8 @@ public class LoginServlet extends HttpServlet {
             res.sendRedirect(properties.controllerservlet);
         }
 
-        //got To LoginServlet Post-Method
-        doPost(req, res);
+        //generateLoginPage
+        res.getWriter().write(adapter.generateLoginHTML(false));
     }
 
     /*
@@ -90,14 +90,11 @@ public class LoginServlet extends HttpServlet {
         validater.validate(username, password);
 
         if (validater.isValidated()) {
-            //Username/Password correct, go to ControllerServlet Servlet
+            //Username/Password correct ... Session is validated
             log.info("ACCESS ALLOWED");
-            RequestDispatcher rd = req.getRequestDispatcher(properties.controllerservlet);
-            res.sendRedirect(properties.controllerservlet);
         } else {
-            //Username/Password incorrect -> try login again
+            //Username/Password incorrect ... Session not validated
             log.info("ACCESS DENIED - Wrong username/password");
-            res.getWriter().write(adapter.generateLoginHTML(true));
         }
     }
 }
