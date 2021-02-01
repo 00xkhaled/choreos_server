@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /*
  * Author: Lukas Grewe
@@ -54,7 +55,9 @@ public class LoginServlet extends HttpServlet {
         }
 
         //generateLoginPage
-        res.getWriter().write(adapter.generateLoginHTML(false));
+        boolean retry = false;
+        if(val.getLoginTry() > 0) retry = true;
+        res.getWriter().write(adapter.generateLoginHTML(retry));
     }
 
     /*
@@ -69,6 +72,11 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         //Get actual HttpSession
         HttpSession session = req.getSession();
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(2);
+        } catch(InterruptedException e) {
+        }
 
         //initialize LoginValidater for HttpSession
         if (session.getAttribute(properties.validater) == null)

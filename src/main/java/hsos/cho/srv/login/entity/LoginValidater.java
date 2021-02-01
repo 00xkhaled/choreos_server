@@ -1,22 +1,23 @@
 package hsos.cho.srv.login.entity;
 
+import hsos.cho.srv.settings.entity.Properties;
 import org.apache.commons.codec.binary.Hex;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
+import javax.inject.Inject;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginValidater {
 
-    @ConfigProperty(name ="login.username")
-    private String username = "choreos";
+    @Inject
+    private Properties properties;
 
-    @ConfigProperty(name ="login.password")
-    private String password = "choreos";
+    private String username = properties.username;
 
-    private String md5password;
+    private String password = properties.password;
 
     //Status Validation
     private boolean validated = false;
@@ -29,16 +30,6 @@ public class LoginValidater {
      * default Constructor
      * */
     public LoginValidater () {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.reset();
-
-            byte[] bytesOfMd5Pw = md.digest(password.getBytes(StandardCharsets.UTF_8));
-            this.md5password = new String(Hex.encodeHex(bytesOfMd5Pw));
-
-        } catch (NoSuchAlgorithmException e){
-
-        }
         loginTry = 0;
     }
 
@@ -47,7 +38,7 @@ public class LoginValidater {
      * */
     public void validate(String uname, String pword)
     {
-        if( uname.contentEquals(username) && pword.contentEquals(md5password))
+        if( uname.contentEquals(username) && pword.contentEquals(password))
         {
             log.info("Password Correct");
             loginTry = 0;
@@ -66,5 +57,9 @@ public class LoginValidater {
     public boolean isValidated()
     {
         return validated;
+    }
+
+    public long getLoginTry(){
+        return loginTry;
     }
 }

@@ -3,7 +3,6 @@ package hsos.cho.srv.feedback.gateway;
 import hsos.cho.srv.feedback.control.FeedbackManager;
 import hsos.cho.srv.feedback.entity.Feedback;
 import org.jboss.logging.Logger;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -28,7 +27,7 @@ public class FeedbackRepository implements FeedbackManager {
     @Override
     @Transactional(value = Transactional.TxType.REQUIRED)
     public List<Feedback> getFeedbacksAsList() {
-        Query query = em.createQuery("SElECT e FROM Feedback e ORDER BY date");
+        Query query = em.createQuery("SElECT e FROM Feedback e ORDER BY date DESC");
 
         List<Feedback> list = new ArrayList<>();
 
@@ -54,21 +53,13 @@ public class FeedbackRepository implements FeedbackManager {
     @Override
     @Transactional(value = Transactional.TxType.REQUIRED)
     public void deleteFeedback(long id) {
-        log.info("FEEDBACK WITH " + id + " DELETED");
+        log.info("FEEDBACK DELETED");
         Feedback fb = em.find(Feedback.class, id);
         em.remove(fb);
     }
 
-    @Override
-    @Transactional(value = Transactional.TxType.REQUIRED)
-    public void deleteAllFeedbacks() {
-        log.info("ALL FEEDBACKS DELETED");
-        em.createQuery("DELETE FROM Feedback").executeUpdate();
-    }
-
     @Transactional(value = Transactional.TxType.REQUIRED)
     public void setFeedbackAsSeen(long id) {
-        log.info("FEEDBACKS " + id + " MAREKD AS SEEN");
         Feedback fb = em.find(Feedback.class, id);
         fb.setWasSeen(true);
         em.merge(fb);

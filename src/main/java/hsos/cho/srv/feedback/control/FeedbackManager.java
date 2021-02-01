@@ -8,5 +8,4 @@ public interface FeedbackManager {
     public List<Feedback> getFeedbacksAsList();
     public void addFeedback(String text);
     public void deleteFeedback(long id);
-    public void deleteAllFeedbacks();
 }

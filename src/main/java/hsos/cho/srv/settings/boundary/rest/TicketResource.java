@@ -10,12 +10,12 @@ public class TicketResource {
     @GET
     @Path("ticketurl")
     public String getTicketUrl(){
-        return Properties.ticketTicketUrl;
+        return Properties.ticketUrl;
     }
 
     @GET
     @Path("date")
     public String getTicketDate(){
-        return Properties.ticketTicketDate.toString();
+        return Properties.ticketDate.toString();
     }
 }

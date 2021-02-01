@@ -15,11 +15,13 @@ public class SettingsHtmlAdapter {
     @ResourcePath("settings.html")
     Template settingsPage;
 
-    public String generateSettingsHtml(boolean changedSettings){
+    public String generateSettingsHtml(boolean ticketDataHasChanged, boolean loginDataHasChanged){
         return settingsPage.data("serverurl", properties.serverurl)
-                .data("ticketurl", properties.ticketTicketUrl)
-                .data("date", properties.ticketTicketDate)
-                .data("changedSettings", changedSettings)
+                .data("ticketurl", properties.ticketUrl)
+                .data("date", properties.ticketDate)
+                .data("changedTickets", ticketDataHasChanged)
+                .data("changedLogin", loginDataHasChanged)
+                .data("username", properties.username)
                 .render();
     }
 }

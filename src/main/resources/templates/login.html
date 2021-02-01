@@ -38,19 +38,21 @@
 <div class="jumbotron">
     <div class="container">
 
-        {#if retry}
-        <div class="infobox alert alert-danger" role="alert">
-            <p>Falsche Logindaten! Bitte geben Sie Ihre Daten erneut ein!</p>
-        </div><br><br>
-        {/if}
-
         <div class="row justify-content-center align-items">
             <div class="col-md-6">
                 <!--
                 <form class="form-signin" action="{serverurl}/login" method="POST">
                     -->
                 <form id="loginform" class="form-signin" method="POST">
-                    <h5>Login</h5>
+                    {#if retry}
+                    <div class="infobox alert alert-danger" role="alert">
+                        <p>Falsche Logindaten! Bitte geben Sie Ihre Daten erneut ein!</p>
+                    </div><br><br>
+                    {/if}
+
+
+                    <h5>Login</h5> <hr>
+
                     <div class="form-group">
                         <label>Name</label>
                         <input id="username" type="text" class="form-control" name="username" placeholder="username" value="choreos"><br>
@@ -58,9 +60,11 @@
                         <input id="password" type="password" class="form-control" name="password" placeholder="passwort" value="choreos"><br>
                         <button id="loginbutton" type="button" class="btn btn-success float-right">Login</button>
                     </div>
+
                 </form>
+
+                </div>
             </div>
-        </div>
 
         <script>
             $('#loginbutton').click(function () {
@@ -74,10 +78,7 @@
                         location.reload();
                     }
                 );
-
-
             });
-
         </script>
 
 

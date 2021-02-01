@@ -10,10 +10,10 @@ hsos\cho\srv\settings\entity\Properties.class
 hsos\cho\srv\login\boundary\LoginServlet.class
 hsos\cho\srv\feedback\adapter\FeedbackHtmlAdapter.class
 hsos\cho\srv\feedback\control\FeedbackManager.class
-hsos\cho\srv\settings\boundary\servlets\Settings.class
 hsos\cho\srv\scenes\boundary\ScenePublisher.class
 hsos\cho\srv\feedback\gateway\FeedbackRepository.class
 hsos\cho\srv\scenes\adapter\ControlHtmlAdapter.class
 hsos\cho\srv\scenes\control\SceneManager.class
 hsos\cho\srv\login\adapter\LoginHtmlAdapter.class
 hsos\cho\srv\feedback\entity\Feedback.class
+hsos\cho\srv\settings\boundary\servlets\SettingsServlet.class

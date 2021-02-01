@@ -4,6 +4,7 @@ import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -15,7 +16,7 @@ public class Feedback implements Cloneable{
     private long id;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private String text;
@@ -25,13 +26,14 @@ public class Feedback implements Cloneable{
     public Feedback(){}
 
     public Feedback(String text){
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
         this.text = text;
         this.wasSeen = false;
     }
 
-    private Feedback(String text, long id, LocalDate ld, boolean wasSeen){
-        this.date = ld;
+    private Feedback(String text, long id, boolean wasSeen, LocalDateTime ldt){
+
+        this.date = ldt;
         this.text = text;
         this.wasSeen = wasSeen;
         this.id = id;
@@ -41,16 +43,8 @@ public class Feedback implements Cloneable{
         return id;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
     public String getText() {
         return text;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public void setText(String text) {
@@ -69,13 +63,21 @@ public class Feedback implements Cloneable{
         return this.wasSeen;
     }
 
+    public LocalDateTime getDateTime() {
+        return date;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.date = dateTime;
+    }
+
     public String getDateAsString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
         return this.date.format(formatter);
     }
 
     @Override
     public Feedback clone(){
-        return new Feedback(this.text, this.id, this.date, this.wasSeen);
+        return new Feedback(this.text, this.id, this.wasSeen, this.date);
     }
 }
