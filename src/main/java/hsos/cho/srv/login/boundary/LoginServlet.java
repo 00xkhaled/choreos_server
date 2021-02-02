@@ -6,7 +6,6 @@ import hsos.cho.srv.settings.entity.Properties;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,11 +51,14 @@ public class LoginServlet extends HttpServlet {
         //if Session is already validated
         if (val.isValidated()){
             res.sendRedirect(properties.controllerservlet);
+            return;
         }
 
         //generateLoginPage
         boolean retry = false;
         if(val.getLoginTry() > 0) retry = true;
+
+        res.setStatus(200);
         res.getWriter().write(adapter.generateLoginHTML(retry));
     }
 
@@ -73,11 +75,6 @@ public class LoginServlet extends HttpServlet {
         //Get actual HttpSession
         HttpSession session = req.getSession();
 
-        try {
-            TimeUnit.MILLISECONDS.sleep(2);
-        } catch(InterruptedException e) {
-        }
-
         //initialize LoginValidater for HttpSession
         if (session.getAttribute(properties.validater) == null)
             session.setAttribute(properties.validater, new LoginValidater());
@@ -90,7 +87,7 @@ public class LoginServlet extends HttpServlet {
         //Check for NO LoginData (username/password) in Request
         if (username == null || password == null) {
             //true: send LoginServlet HTML Page
-            res.getWriter().write(adapter.generateLoginHTML(false));
+            res.getWriter().write(adapter.generateLoginHTML(true));
             return;
         }
 

@@ -37,6 +37,7 @@ public class FeedbackServlet extends HttpServlet {
             //true: Acces denied, going to LoginServlet
             res.sendRedirect(properties.loginservlet);
             log.info("ACCESS DENIED");
+            return;
         }
 
         res.getWriter().write(adapter.generateFeedbackHtml());

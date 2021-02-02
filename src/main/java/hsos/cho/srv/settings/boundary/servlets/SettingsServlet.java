@@ -4,7 +4,6 @@ import hsos.cho.srv.login.entity.LoginValidater;
 import hsos.cho.srv.settings.adapter.SettingsHtmlAdapter;
 import hsos.cho.srv.settings.entity.Properties;
 import org.jboss.logging.Logger;
-
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +39,9 @@ public class SettingsServlet extends HttpServlet {
         }
         this.ticketDataHasChanged = false;
         this.loginDataHasChanged = false;
+
+        res.setStatus(200);
+        res.setBufferSize(8 * 1024);
         res.getWriter().write(adapter.generateSettingsHtml(this.ticketDataHasChanged, this.loginDataHasChanged));
     }
 
@@ -71,18 +73,15 @@ public class SettingsServlet extends HttpServlet {
                     break;
             }
         }
-        try {
-            TimeUnit.MILLISECONDS.sleep(200);
-        } catch(InterruptedException e) {
-            System.out.println("Interrupt Exception!");
-        }
+        try { TimeUnit.MILLISECONDS.sleep(200);}
+        catch(InterruptedException e) {System.out.println("Interrupt Exception!");};
+
         res.setStatus(200);
         res.getWriter().write(adapter.generateSettingsHtml(ticketDataHasChanged, loginDataHasChanged));
-        try {
-            TimeUnit.MILLISECONDS.sleep(200);
-        } catch(InterruptedException e) {
-            System.out.println("Interrupt Exception!");
-        }
+
+        try { TimeUnit.MILLISECONDS.sleep(200);}
+        catch(InterruptedException e) {System.out.println("Interrupt Exception!");}
+
         this.ticketDataHasChanged = false;
         this.loginDataHasChanged = false;
     }

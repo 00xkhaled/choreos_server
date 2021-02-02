@@ -3,7 +3,6 @@ package hsos.cho.srv.scenes.boundary;
 import hsos.cho.srv.scenes.control.SceneManager;
 import hsos.cho.srv.scenes.entity.Scene;
 import org.jboss.logging.Logger;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.enterprise.context.ApplicationScoped;
@@ -48,7 +47,7 @@ public class ScenePublisher {
     }
 
     @OnClose
-    public void onClose(Session session, @PathParam("userId") String id) {
+    public void onClose(Session session, @PathParam("userId") String id){
         sessions.remove(id);
         log.debug("USER: " + id + " UNSUBSCRIBED FROM SOCKET");
     }

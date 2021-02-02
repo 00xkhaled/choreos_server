@@ -39,6 +39,8 @@ public class ControllerServlet extends HttpServlet {
             return;
         }
 
+        res.setStatus(200);
+        //res.setBufferSize(15 * 1024);
         res.getWriter().write(adapter.generateControlHTML());
     }
 
@@ -53,6 +55,7 @@ public class ControllerServlet extends HttpServlet {
             //true: Acces denied, going to LoginServlet
             res.sendRedirect(properties.loginservlet);
             log.info("ACCESS DENIED");
+            return;
         }
 
         if(req.getParameter(Properties.scene) != null) {
