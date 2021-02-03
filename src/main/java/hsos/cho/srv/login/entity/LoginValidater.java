@@ -1,65 +1,57 @@
 package hsos.cho.srv.login.entity;
 
 import hsos.cho.srv.settings.entity.Properties;
-import org.apache.commons.codec.binary.Hex;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
-
 import javax.inject.Inject;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author Lukas Grewe
+ * LoginValidater is an Entity, that exist in the Session.
+ * This entity validates the session
+ */
 public class LoginValidater {
-
-    @Inject
-    private Properties properties;
-
+    //for using some properties
+    @Inject private Properties properties;
+    //get username from properties
     private String username = properties.username;
-
+    //get password from properties
     private String password = properties.password;
-
-    //Status Validation
+    //status of Validation
     private boolean validated = false;
-    //Count of Tries
+    //count of logintries
     private short loginTry;
-
+    //Logger for this class
     private static final Logger log = Logger.getLogger(LoginValidater.class.getSimpleName());
 
-    /*
+    /**
      * default Constructor
-     * */
-    public LoginValidater () {
-        loginTry = 0;
-    }
+     **/
+    public LoginValidater () { loginTry = 0; }
 
-    /*
-     * validate incoming login data from user
+    /**
+     * @author Lukas Grewe
+     * validate incoming login data from a Post-Request
+     * @param uname username extracted from Post-Request
+     * @param pword password extracted from PostRequest
      * */
     public void validate(String uname, String pword)
     {
-        if( uname.contentEquals(username) && pword.contentEquals(password))
-        {
+        if( uname.contentEquals(username) && pword.contentEquals(password)) {
+            //username/password correct -> session is validated
             log.info("Password Correct");
-            loginTry = 0;
             validated = true;
             return;
         }
-
+        //else
+        //username/password incorrect -> session not validated
         log.info("username or password incorrect! Try again! Try: " + loginTry );
         ++loginTry;
-        validated = false;
     }
 
-    /*
-     * Get validated
-     * */
-    public boolean isValidated()
-    {
-        return validated;
-    }
+    /**
+     * GETTER AND SETTER METHODS BELOW
+     */
+    public boolean isValidated() { return validated; }
 
-    public long getLoginTry(){
-        return loginTry;
-    }
+    public long getLoginTry(){ return loginTry; }
 }

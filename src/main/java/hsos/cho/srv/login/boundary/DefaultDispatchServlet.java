@@ -7,11 +7,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+/**
+ * @author Lukas Grewe
+ * This Servlet is only used to redirect to the loginServlet
+ */
 @WebServlet("")
 public class DefaultDispatchServlet extends HttpServlet {
-
-    @Inject
-    Properties properties;
+    //for using some properties
+    @Inject Properties properties;
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res)

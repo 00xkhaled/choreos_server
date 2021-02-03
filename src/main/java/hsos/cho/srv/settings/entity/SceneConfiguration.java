@@ -2,12 +2,24 @@ package hsos.cho.srv.settings.entity;
 
 import io.quarkus.arc.config.ConfigProperties;;
 
+/**
+ * @author Lukas Grewe
+ * This class reads the scene name and scene description from application.properties
+ */
 @ConfigProperties(prefix = "scene")
 public class SceneConfiguration {
 
-    /*
-    Inject Scene Names and Description from application.properties with prefix "scene."
-    */
+    /**
+     * Inject Scene Names and Description from application.properties with prefix "scene."
+     * sa = scene0
+     * sb = scene1
+     * sc = scene2
+     * sd = scene3
+     * se = scene4
+     * sf = scene5
+     * sg = scene6
+     * sh = scene7
+     */
 
     public String saname;
     public String sadescription;

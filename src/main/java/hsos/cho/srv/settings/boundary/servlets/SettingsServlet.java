@@ -14,19 +14,34 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.concurrent.TimeUnit;
+
+/**
+ * @author Lukas Grewe
+ * WebServlet is used to control the Ticketdata and Logindata
+ */
 
 @WebServlet("/settings")
 public class SettingsServlet extends HttpServlet {
 
-    @Inject
-    SettingsHtmlAdapter adapter;
-    @Inject
-    Properties properties;
+    //Used to generate the HtmlPage for SettingServlet
+    @Inject SettingsHtmlAdapter adapter;
+    //Using some variables from Properties
+    @Inject Properties properties;
+    //Logger for this class
     private static final Logger log = Logger.getLogger(SettingsServlet.class.getSimpleName());
+    //to generate a "Changes Accepted" banner in Html site
     private boolean ticketDataHasChanged = false;
     private boolean loginDataHasChanged = false;
 
+    /**
+     * @author Lukas Grewe
+     * GET-Request Method
+     *
+     * send settings.html from resources/templates if session is validated,
+     * else redirect to to loginServlet
+     */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -39,12 +54,15 @@ public class SettingsServlet extends HttpServlet {
         }
         this.ticketDataHasChanged = false;
         this.loginDataHasChanged = false;
-
         res.setStatus(200);
-        res.setBufferSize(8 * 1024);
         res.getWriter().write(adapter.generateSettingsHtml(this.ticketDataHasChanged, this.loginDataHasChanged));
     }
 
+    /**
+     * @author Lukas Grewe
+     * POST-Request Method
+     * Changing Loginpassword or Ticketinformation on requestParameter "action"
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -54,41 +72,54 @@ public class SettingsServlet extends HttpServlet {
             //true: Acces denied, going to LoginServlet
             res.sendRedirect(properties.loginservlet);
         }
+        //Get Session parameter "action" for switching the login or ticketdata procedure
         String action = req.getParameter("action");
         if(action != null) {
+            //param action is set, switch to case
             switch(req.getParameter("action")){
                 case "changelogindata":
+                    //variable that is set on Client site, means newpassword and newpasswordrepeat is equal
                     String equals = req.getParameter("equals");
                     String oldpassword = req.getParameter("oldpassword");
                     String newpassword = req.getParameter("newpassword");
                     if(oldpassword != null && newpassword != null){
+                        //oldpassword and newpassword is set -> changing Logindata
                         changeLoginData(oldpassword, newpassword, equals);
                     }
                     break;
                 case "changeticketdata":
                     String ticketurl = req.getParameter("ticketurl");
                     String date = req.getParameter("ticketdate");
-                    changeTicketData(ticketurl, date);
+                    if(ticketurl != null && date != null) {
+                        changeTicketData(ticketurl, date);
+                    }
                     log.info("TICKETURL/TICKETDATE CHANGED");
                     break;
             }
         }
+        //Delay for saving new data in properties class
         try { TimeUnit.MILLISECONDS.sleep(200);}
-        catch(InterruptedException e) {System.out.println("Interrupt Exception!");};
+        catch(InterruptedException e) {log.error("Interrupt Exception!");}
 
+        //generate response
         res.setStatus(200);
         res.getWriter().write(adapter.generateSettingsHtml(ticketDataHasChanged, loginDataHasChanged));
-
-        try { TimeUnit.MILLISECONDS.sleep(200);}
-        catch(InterruptedException e) {System.out.println("Interrupt Exception!");}
 
         this.ticketDataHasChanged = false;
         this.loginDataHasChanged = false;
     }
 
+    /**
+     * @author Lukas Grewe
+     * @param oldpassword is the password, that was set in PropertiesClass
+     * @param newpassword is the password, that will be set in PropertisClass
+     * @param equals is an variable, that is set on clientsite, means newpassword and newpasswordrepeat is equal
+     */
     private void changeLoginData(String oldpassword, String newpassword, String equals) {
         if(equals.contentEquals("true")){
+            //newpassword and newpasswordrepeat is equal
             if(oldpassword.contentEquals(properties.password)){
+                //oldpassword equal password in PropertiesClass -> switching passwords
                 properties.password = newpassword;
                 loginDataHasChanged = true;
                 log.info("LOGINDATA CHANGED");
@@ -98,26 +129,38 @@ public class SettingsServlet extends HttpServlet {
         loginDataHasChanged = false;
     }
 
+    /**
+     * @author Lukas Grewe
+     * @param ticketurl is the new ticketurl that will be set in Properties Class
+     * @param date is the new available ticketdate that will be set in Properties Class
+     */
     private void changeTicketData(String ticketurl, String date) {
-
-        if(ticketurl != null && date != null) {
-            Properties.ticketUrl = ticketurl;
-            try {
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate ld = LocalDate.parse(date, dtf);
-                Properties.ticketDate = ld;
-            } catch (Exception e){
-                log.error("Falsches Datum Format");
-                this.ticketDataHasChanged = false;
-            }
-            Properties.ticketUrl = ticketurl;
-            this.ticketDataHasChanged = true;
+        //set new ticketurl in Properties class
+        Properties.ticketUrl = ticketurl;
+        try {
+            //try to parse the date into LocalDate class
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate ld = LocalDate.parse(date, dtf);
+            Properties.ticketDate = ld;
+        } catch (DateTimeParseException e) {
+            //catch Exception, if the date format is wrong
+            log.error("Falsches Datum Format");
+            this.ticketDataHasChanged = false;
         }
+        this.ticketDataHasChanged = true;
     }
 
+    /**
+     * @author Lukas Grewe
+     * @param session that will be checked for a valid session
+     * @return true if session is validated
+     * @return false if session is not validated
+     */
     public boolean proveValidation(HttpSession session) {
+        //Getting Validator informations from Session
         LoginValidater validater = (LoginValidater) session.getAttribute(Properties.validater);
         if (validater != null) {
+            //if validater existe -> check is validated
             if (validater.isValidated()) return true;
         }
         return false;

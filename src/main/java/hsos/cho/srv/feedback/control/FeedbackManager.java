@@ -1,11 +1,16 @@
 package hsos.cho.srv.feedback.control;
 
 import hsos.cho.srv.feedback.entity.Feedback;
-
 import java.util.List;
 
+/**
+ * @author Lukas Grewe
+ * Represents an Interface to Acces the FeedbackRepository from boundary
+ * Its Injected in FeedbackBoundary
+ */
+
 public interface FeedbackManager {
-    public List<Feedback> getFeedbacksAsList();
-    public void addFeedback(String text);
-    public void deleteFeedback(long id);
+    List<Feedback> getFeedbacksAsList();
+    void addFeedback(String text);
+    void deleteFeedback(long id);
 }

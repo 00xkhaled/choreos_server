@@ -18,6 +18,7 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+
     <!-- Control Servlet to update the States -->
     <servlet>
         <servlet-name>controlServlet</servlet-name>
@@ -40,6 +41,17 @@
         <url-pattern>/settings</url-pattern>
     </servlet-mapping>
 
+    <!-- FeedbackServlet -->
+    <servlet>
+        <servlet-name>feedbackServlet</servlet-name>
+        <servlet-class>java.hsos.cho.srv.feedback.boundary.FeedbackServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>feedbackServlet</servlet-name>
+        <url-pattern>/feedback</url-pattern>
+    </servlet-mapping>
+
     <!-- Default: ControlServlet -->
     <servlet>
         <servlet-name>defaultDispatchServlet</servlet-name>
@@ -48,24 +60,7 @@
 
     <servlet-mapping>
         <servlet-name>defaultDispatchServlet</servlet-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <!-- FeedbackServlet -->
-    <servlet>
-        <servlet-name>loginServlet</servlet-name>
-        <servlet-class>java.hsos.cho.srv.feedback.boundary.FeedbackServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>loginServlet</servlet-name>
-        <url-pattern>/feedback</url-pattern>
-    </servlet-mapping>
-
-
-    <!-- Servlet Configuration -->
-    <session-config>
-        <session-timeout>60</session-timeout>
-    </session-config>
 
 </web-app>

@@ -39,23 +39,27 @@
     <div class="jumbotron">
         <div class="container">
             <h5>Feedback</h5>
+            <!--
             <button id="feedback" class="btn btn-success">Feedback geben</button>
-
+-->
             <script>
+                /*
                 $('#feedback').click(function () {
 
                     $.post("{serverurl}/feedback", {
-                            feedbacktext: "Hi du da, das ist ein Feeeedback!"
+                            feedbacktext: "Hi du da, das ist ein Fedback!"
                         }, function (data){
                             location.reload();
                         }
                     );
                 });
+
+                 */
             </script>
 
             <hr>
             {#if feedbacks.size == 0}
-                <p><b>Es ist leider noch kein Feedback eingetroffen!</b></p>
+                <p><br><b>Es ist leider noch kein Feedback eingetroffen!</b></p>
             {/if}
 
 

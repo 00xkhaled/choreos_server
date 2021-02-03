@@ -1,13 +1,13 @@
 package hsos.cho.srv.settings.entity;
 
 import io.quarkus.arc.config.ConfigProperties;
-import org.apache.commons.codec.binary.Hex;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 
+/**
+ * @author: Lukas Grewe
+ * This class is used to insert the config-paramerts from application.properties file
+ * It holds the meta-informations for the Application
+ */
 @ConfigProperties(prefix = "config")
 public class Properties {
 
@@ -22,9 +22,9 @@ public class Properties {
     public String loginservlet;
     public String controllerservlet;
     public String settingsservlet;
-    public String defaultdispatchservlet = "";
 
     public static String username= "choreos";
+    //pw: choreos MD5ecndoded
     public static String password = "4d120dff5bb8db9853e69e627c554bfe";
 
     /*
