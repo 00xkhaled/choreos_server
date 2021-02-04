@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet("")
 public class DefaultDispatchServlet extends HttpServlet {
     //for using some properties
-    @Inject Properties properties;
+    @Inject private Properties properties;
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res)

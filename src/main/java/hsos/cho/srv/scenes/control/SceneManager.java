@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Lukas Grewe
- * SceneManagar act sceneoperations and communicate with the publisherWebsocket
+ * SceneManagar act sceneoperations (switchScene, stopScene) and communicate with the publisherWebsocket
  */
 @ApplicationScoped
 public class SceneManager {
@@ -31,7 +31,7 @@ public class SceneManager {
      * @author Lukas Grewe
      * Default Constructor
      */
-    private SceneManager() {
+    public SceneManager() {
         //initiate a new HashMap for the scenes
         scenes = new ConcurrentHashMap<>();
         //set currentSceneId to default value
@@ -91,7 +91,7 @@ public class SceneManager {
      * to this.scenes HashMap
      */
     @PostConstruct
-    public void initSceneManagerScenes() {
+    private void initSceneManagerScenes() {
         //init Stop scene
         stop = new Scene(-1, "STOP", "Stoppt die derzeit laufende Szene!");
         //init Scene 0

@@ -15,9 +15,9 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class LoginHtmlAdapter {
     //inject template
-    @ResourcePath("login.html") Template loginPage;
+    @ResourcePath("login.html") private Template loginPage;
     //to use some properties
-    @Inject Properties properties;
+    @Inject private Properties properties;
 
     /**
      * @param reTry is used to show a banner if its a login retry (password false)

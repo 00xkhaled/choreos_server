@@ -32,8 +32,8 @@ public class Properties {
      */
 
     //SESSION PARAMETER
-    public static final String validater = "validater";
-    public static final String scene = "scene";
+    public static String validater = "validater";
+    public static String scene = "scene";
 
     //TICKET INFORMATION
     public static String ticketUrl = "www.defaultticketurl.de";

@@ -1,4 +1,4 @@
-package hsos.cho.srv.settings.boundary.rest;
+package hsos.cho.srv.settings.boundary;
 
 import hsos.cho.srv.settings.entity.Properties;
 import javax.ws.rs.GET;

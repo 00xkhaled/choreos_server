@@ -1,7 +1,6 @@
 hsos\cho\srv\scenes\boundary\ControllerServlet.class
 hsos\cho\srv\settings\entity\SceneConfiguration.class
 hsos\cho\srv\login\boundary\DefaultDispatchServlet.class
-hsos\cho\srv\settings\boundary\rest\TicketResource.class
 hsos\cho\srv\feedback\boundary\FeedbackServlet.class
 hsos\cho\srv\settings\adapter\SettingsHtmlAdapter.class
 hsos\cho\srv\scenes\entity\Scene.class
@@ -14,6 +13,7 @@ hsos\cho\srv\scenes\boundary\ScenePublisher.class
 hsos\cho\srv\feedback\gateway\FeedbackRepository.class
 hsos\cho\srv\scenes\adapter\ControlHtmlAdapter.class
 hsos\cho\srv\scenes\control\SceneManager.class
+hsos\cho\srv\settings\boundary\SettingsServlet.class
+hsos\cho\srv\settings\boundary\TicketResource.class
 hsos\cho\srv\login\adapter\LoginHtmlAdapter.class
 hsos\cho\srv\feedback\entity\Feedback.class
-hsos\cho\srv\settings\boundary\servlets\SettingsServlet.class

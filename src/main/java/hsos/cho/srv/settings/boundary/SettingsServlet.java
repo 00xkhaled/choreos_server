@@ -1,4 +1,4 @@
-package hsos.cho.srv.settings.boundary.servlets;
+package hsos.cho.srv.settings.boundary;
 
 import hsos.cho.srv.login.entity.LoginValidater;
 import hsos.cho.srv.settings.adapter.SettingsHtmlAdapter;

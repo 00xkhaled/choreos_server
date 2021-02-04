@@ -19,7 +19,7 @@ public class LoginValidater {
     //status of Validation
     private boolean validated = false;
     //count of logintries
-    private short loginTry;
+    private long loginTry;
     //Logger for this class
     private static final Logger log = Logger.getLogger(LoginValidater.class.getSimpleName());
 

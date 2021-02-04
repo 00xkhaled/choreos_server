@@ -13,8 +13,8 @@ import java.io.*;
 
 /**
  * @author Lukas Grewe
- * WebServlet to control the Scenes
- * it communicate to the SceneManager when a new Scene will be activated int the Post-Request
+ * WebServlet to control the Scenes, that displayed in Browser on Client Site
+ * it communicate to the SceneManager when a new Scene will be activated in the Post-Request
  */
 @WebServlet("/control")
 public class ControllerServlet extends HttpServlet {
@@ -95,7 +95,7 @@ public class ControllerServlet extends HttpServlet {
      * @return true if session is validated
      * @return false if session is not validated
      */
-    public boolean proveValidation(HttpSession session) {
+    private boolean proveValidation(HttpSession session) {
         //Getting Validator informations from Session
         LoginValidater validater = (LoginValidater) session.getAttribute(Properties.validater);
         if (validater != null) {

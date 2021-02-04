@@ -2,17 +2,17 @@ package hsos.cho.srv.scenes.boundary;
 
 import hsos.cho.srv.scenes.control.SceneManager;
 import hsos.cho.srv.scenes.entity.Scene;
+import io.undertow.util.BadRequestException;
 import org.jboss.logging.Logger;
+
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnOpen;
+import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import javax.websocket.Session;
 
 /**
  * @author Lukas Grewe
@@ -50,7 +50,6 @@ public class ScenePublisher {
         String message = "start" + " " + sceneId + " " + millisSceneRunning;
         //inform all active sessions
         session.getAsyncRemote().sendObject(message, result ->  {
-            System.out.println("sending Message " + message);
             if (result.getException() != null) {
                 System.out.println("Unable to send new State: " + result.getException());
             }
@@ -75,6 +74,15 @@ public class ScenePublisher {
     public void onError(Session session, @PathParam("userId") String id, Throwable throwable) {
         sessions.remove(id);
         log.debug("USER: " + id + " UNSUBSCRIBED FROM SOCKET ON ERROR");
+
+        if (!session.isOpen()) {
+            log.info("THROWABLE IN CLOSED WEBSOCKET: " + throwable.getMessage());
+            return;
+        }
+        CloseReason.CloseCode reason = throwable instanceof BadRequestException ? CloseReason.CloseCodes.PROTOCOL_ERROR : CloseReason.CloseCodes.UNEXPECTED_CONDITION;
+        try { session.close(new CloseReason(reason, throwable.getMessage())); }
+        catch (IOException e) { log.error("WEBSOCKET COULD NOT CLOSED!"); }
+
     }
 
     /**
