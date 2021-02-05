@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
 /**
  * @authro Lukas Grewe
  * Feedback Entity
@@ -16,7 +17,8 @@ public class Feedback implements Cloneable{
     @Id @SequenceGenerator(name = "feedbackSeq", sequenceName = "feedback_id_seq", allocationSize = 1, initialValue = 1) @GeneratedValue(generator = "feedbackSeq")
     private long id;
     //will be set when a Feedback is created
-    @Column(nullable = false) private LocalDateTime date;
+    @Column(nullable = false)
+    private String date;
     //incoming text from Feedback
     @Column(nullable = false) private String text;
     //used to mark, when its already retrieved
@@ -33,7 +35,8 @@ public class Feedback implements Cloneable{
      * @param text will be the Feedback test
      */
     public Feedback(String text){
-        this.date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+        this.date = LocalDateTime.now().format(formatter);
         this.text = text;
         this.wasSeen = false;
     }
@@ -44,10 +47,10 @@ public class Feedback implements Cloneable{
      * @param text -> from origin Feedback
      * @param id -> from origin Feedback
      * @param wasSeen -> from origin Feedback
-     * @param ldt -> from origin Feedback
+     * @param d -> from origin Feedback
      */
-    private Feedback(String text, long id, boolean wasSeen, LocalDateTime ldt){
-        this.date = ldt;
+    private Feedback(String text, long id, boolean wasSeen, String d){
+        this.date = d;
         this.text = text;
         this.wasSeen = wasSeen;
         this.id = id;
@@ -55,21 +58,11 @@ public class Feedback implements Cloneable{
 
     /**
      * @author Lukas Grewe
-     * @return a deep copy of an Feedback
+     * @return a deep copy of this Feedback
      */
     @Override
     public Feedback clone(){
         return new Feedback(this.text, this.id, this.wasSeen, this.date);
-    }
-
-    /**
-     * @author Lukas Grewe
-     * this Method is used in FeedbackHtmlAdapter to show the date in "dd.MM.yyyy, HH:mm" format
-     * @return the creation Date of the Feedback
-     */
-    public String getDateAsString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
-        return this.date.format(formatter);
     }
 
     /**
@@ -88,7 +81,7 @@ public class Feedback implements Cloneable{
 
     public boolean getWasSeen() { return this.wasSeen; }
 
-    public LocalDateTime getDateTime() { return date; }
+    public String getDate() { return date; }
 
-    public void setDateTime(LocalDateTime dateTime) { this.date = dateTime; }
+    public void setDate(String date) { this.date = date; }
 }

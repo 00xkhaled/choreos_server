@@ -1,31 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Choreos - Controller</title>
-
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-grid.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-reboot.min.css" rel="stylesheet">
-
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
-
     <!-- JQuery -->
     <script src="assets/js/jquery.js"></script>
-
     <!-- Icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
     <!-- Favivon -->
     <link rel="icon" href="assets/img/choreos-favicon.png" type="image/png">
 </head>
-
 <body>
     <div class="page-header">
         <div class="container">
@@ -35,13 +27,12 @@
             <a class="nav-item nav-link float-right" href="{serverurl}/control">Steuerung</a>
         </div>
     </div>
-
     <div class="jumbotron">
         <div class="container">
             <h5>Feedback</h5>
             <!--
             <button id="feedback" class="btn btn-success">Feedback geben</button>
--->
+            -->
             <script>
                 /*
                 $('#feedback').click(function () {
@@ -53,21 +44,16 @@
                         }
                     );
                 });
-
                  */
             </script>
-
             <hr>
             {#if feedbacks.size == 0}
                 <p><br><b>Es ist leider noch kein Feedback eingetroffen!</b></p>
             {/if}
-
-
             {#for feedback in feedbacks}
             <div class="card">
                 <div class="card-header">
-
-                    Zuschauer am {feedback.getDateAsString()} Uhr
+                    Zuschauer am {feedback.getDate()} Uhr
                     <div class="float-right">
                         {#if feedback.getWasSeen() == false } <b>NEU! &nbsp </b>{/if}
                         <i id="deletefb{feedback.getId()}" class="trash-icon far fa-trash-alt"></i></a>
@@ -79,7 +65,6 @@
                     </blockquote>
                 </div>
             </div>
-
             <script>
                 $('#deletefb{feedback.getId()}').click(function () {
                     $.ajax({
@@ -92,7 +77,6 @@
                     });
                 });
             </script>
-
             {/for}
         </div>
     </div>

@@ -1,101 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Choreos - Controller</title>
-
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-grid.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-reboot.min.css" rel="stylesheet">
-
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
-
     <!-- JQuery -->
     <script src="assets/js/jquery.js"></script>
-
     <!-- Favivon -->
     <link rel="icon" href="assets/img/choreos-favicon.png" type="image/png">
 </head>
-
 <body>
-
-<div class="page-header">
-    <div class="container">
-        <img src="assets/img/choreos_logo.png">
-        <a class="nav-item nav-link float-right" href="{serverurl}/settings">Einstellungen</a>
-        <a class="nav-item nav-link float-right" href="{serverurl}/feedback">Feedback</a>
-        <a class="nav-item nav-link float-right activ-page" href="">Steuerung</a>
+    <div class="page-header">
+        <div class="container">
+            <img src="assets/img/choreos_logo.png">
+            <a class="nav-item nav-link float-right" href="{serverurl}/settings">Einstellungen</a>
+            <a class="nav-item nav-link float-right" href="{serverurl}/feedback">Feedback</a>
+            <a class="nav-item nav-link float-right activ-page" href="">Steuerung</a>
+        </div>
     </div>
-</div>
 
-<div class="jumbotron">
-    <div class="container">
-        <h5>Szenen Steuerung</h5>
-        <hr>
-
-        <div class="row">
-            {#if stop.isActiv()} <div id="stopScene" class="stop col stop-activ">
-            {#else} <div id="stopScene" class="stop col stop-inactiv">
-            {/if}
-                <h1>{stop.getName()}</h1>
-                <p>{stop.getDescription()}</p>
-            </div>
-
-            {#if stop.isActiv()}
-            <script>
-                $('#stopScene').click(function () {
-
-                    $.post("{serverurl}/control",
-                        {
-                            scene: "stop"
-                        }, function (data){
-                            location.reload();
-                        }
-                    );
-                });
-            </script>
-            {/if}
-
-            {#for s in scenes}
-
-            {#if count == 3} <div class="row"> {/if}
-            {#if count == 6} <div class="row"> {/if}
-
-            {#if s.isActiv()}
-            <div id="scene{s.getId()}" class="col activ-scene">
-            {#else}
-            <div id="scene{s.getId()}" class="col inactiv-scene">
-            {/if}
-                <h5>{s.getId()} {s.getName()}</h5>
-                <p>{s.getDescription()}</p>
-            </div>
-
-
-             <script>
-              $('#scene{s.getId()}').click(function () {
-
-              $.post("{serverurl}/control", {
-                    scene: "{s.getId()}"
-                        }, function (data){
-                            location.reload();
-                        }
-                    );
-              });
-              </script>
-
-            {#if count == 2} </div> {/if}
-            {#if count == 5} </div> {/if}
-            {#if count == 8} </div> {/if}
-            {#if count == scenes.size} <hr> </div> {/if}
-            {/for}
-        </div> <!-- END -->
-
-    </div><!-- END -->
+    <div class="jumbotron">
+        <div class="container">
+            <h5>Szenen Steuerung</h5>
+            <hr>
+            <div class="row">
+                {#if stop.isActiv()} <div id="stopScene" class="stop col stop-activ">
+                {#else} <div id="stopScene" class="stop col stop-inactiv">
+                {/if}
+                    <h1>{stop.getName()}</h1>
+                    <p>{stop.getDescription()}</p>
+                </div>
+                {#if stop.isActiv()}
+                <script>
+                    $('#stopScene').click(function () {
+                        $.post("{serverurl}/control",
+                            {
+                                scene: "stop"
+                            }, function (data){
+                                location.reload();
+                            }
+                        );
+                    });
+                </script>
+                {/if}
+                {#for s in scenes}
+                {#if count == 3} <div class="row"> {/if}
+                {#if count == 6} <div class="row"> {/if}
+                {#if s.isActiv()}
+                <div id="scene{s.getId()}" class="col activ-scene">
+                {#else}
+                <div id="scene{s.getId()}" class="col inactiv-scene">
+                {/if}
+                    <h5>{s.getId()} {s.getName()}</h5>
+                    <p>{s.getDescription()}</p>
+                </div>
+                 <script>
+                  $('#scene{s.getId()}').click(function () {
+                  $.post("{serverurl}/control", {
+                        scene: "{s.getId()}"
+                            }, function (data){
+                                location.reload();
+                            }
+                        );
+                  });
+                  </script>
+                {#if count == 2} </div> {/if}
+                {#if count == 5} </div> {/if}
+                {#if count == 8} </div> {/if}
+                {#if count == scenes.size} <hr> </div> {/if}
+                {/for}
+            </div> <!-- END -->
+        </div><!-- END -->
+    </div>
 </body>
 </html>

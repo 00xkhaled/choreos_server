@@ -34,10 +34,9 @@ public class FeedbackRepository implements FeedbackManager {
     @Transactional(value = Transactional.TxType.REQUIRED)
     public List<Feedback> getFeedbacksAsList() {
         //Query to get all Feedbacks from database
-        Query query = em.createQuery("SElECT e FROM Feedback e ORDER BY date DESC");
+        Query query = em.createQuery("SElECT e FROM Feedback e ORDER BY id DESC");
         //initialization of an other List to clone the Feedbacks from QueryResult
         List<Feedback> list = new ArrayList<>();
-
         //Clone all Feedbacks from querylist to list
         for(Object f : query.getResultList()){
             //cloning feedback values
@@ -46,7 +45,6 @@ public class FeedbackRepository implements FeedbackManager {
                 //mark Feedback as seen
                 setFeedbackAsSeen(((Feedback)f).getId());
         }
-
         return list;
     }
 

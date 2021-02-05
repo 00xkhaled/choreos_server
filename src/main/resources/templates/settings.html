@@ -5,119 +5,102 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Choreos - Settings</title>
-
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-grid.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-reboot.min.css" rel="stylesheet">
-
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
-
     <!-- JQuery -->
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/md5.js"></script>
-
     <!-- Favivon -->
     <link rel="icon" href="assets/img/choreos-favicon.png" type="image/png">
 </head>
-
 <body>
-
-<div class="page-header">
-    <div class="container">
-        <img src="assets/img/choreos_logo.png">
-        <a class="nav-item nav-link float-right activ-page" href="">Einstellungen</a>
-        <a class="nav-item nav-link float-right" href="{serverurl}/feedback">Feedback</a>
-        <a class="nav-item nav-link float-right" href="{serverurl}/control">Steuerung</a>
+    <div class="page-header">
+        <div class="container">
+            <img src="assets/img/choreos_logo.png">
+            <a class="nav-item nav-link float-right activ-page" href="">Einstellungen</a>
+            <a class="nav-item nav-link float-right" href="{serverurl}/feedback">Feedback</a>
+            <a class="nav-item nav-link float-right" href="{serverurl}/control">Steuerung</a>
+        </div>
     </div>
-</div>
+    <div class="jumbotron">
+        <div class="container">
+            {#if changedTickets}
+            <div class="infobox alert alert-success" role="alert">
+                <p>Einstellungen wurden gespeichert!</p>
+            </div><br><br>
+            {/if}
+            <form class="form-tickets" method="post">
+                <div class="form-group">
+                    <h5>Tickets</h5>
+                    <hr>
+                    <label>URL</label>
+                    <input id="ticketurl" type="text" class="form-control" name="ticketurl" value="{ticketurl}" placeholder="Browseradresse zu den Tickets"><br>
+                    <label>Datum der Ticketverfügbarkeit</label> <br>
+                    <input id="ticketdate" type="date" class="form-control col-3" name="ticketdate" value="{date}">
+                    <br>
+                    <button id="ticketdatabutton" type="" class="float-right btn btn-success">Ticket Einstellungen übernehmen</button>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            {#if changedLogin}
+            <div class="infobox alert alert-success" role="alert">
+                <p>Login Daten wurden gespeichert!</p>
+            </div><br><br>
+            {/if}
+            <form class="form-changeLoginData" method="post">
+                <div class="form-group">
+                    <h5>Login Daten</h5>
+                    <hr>
+                    <label>altes Passwort</label> <br>
+                    <input id="oldpassword" type="password" class="form-control" name="oldpassword" value="" placeholder="altes Passwort eingeben" required><br>
+                    <label>neues Passwort</label> <br>
+                    <input id="newpassword" type="password" class="form-control" name="newpassword" value="" placeholder="neues Passwort eingeben" required><br>
+                    <label>neues Passwort wiederholen</label> <br>
+                    <input id="newpasswordre" type="password" class="form-control" name="newpasswordre" value="" placeholder="neues Passwort wiederholen" required><br>
+                    <button id="logindatabutton" type="" class="float-right btn btn-success">Login Einstellungen übernehmen</button>
+                </div>
+            </form>
+        </div>
+        <script>
+            $('#logindatabutton').click(function () {
+                var pwold = document.getElementById('oldpassword').value;
+                var pwnew = document.getElementById('newpassword').value;
+                var pwnewre = document.getElementById('newpasswordre').value;
+                var equals = "false";
 
-<div class="jumbotron">
+                if(pwold != "" && pwnew != "" && pwnewre != ""){
+                    if(pwnew == pwnewre) equals = "true";
 
-    <div class="container">
+                    console.log(equals +" beide pw gleich")
 
-        {#if changedTickets}
-        <div class="infobox alert alert-success" role="alert">
-            <p>Einstellungen wurden gespeichert!</p>
-        </div><br><br>
-        {/if}
+                    $.post("{serverurl}/settings", {
+                        action: "changelogindata",
+                        oldpassword: MD5(pwold),
+                        newpassword: MD5(pwnew),
+                        equals: equals
+                    }, function(){
 
-        <form class="form-tickets" method="post">
-            <div class="form-group">
-                <h5>Tickets</h5>
-                <hr>
-                <label>URL</label>
-                <input id="ticketurl" type="text" class="form-control" name="ticketurl" value="{ticketurl}" placeholder="Browseradresse zu den Tickets"><br>
-                <label>Datum der Ticketverfügbarkeit</label> <br>
-                <input id="ticketdate" type="date" class="form-control" name="ticketdate" value="{date}">
-                <br>
-                <button id="ticketdatabutton" type="" class="float-right btn btn-success">Ticket Einstellungen übernehmen</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="container">
-
-        {#if changedLogin}
-        <div class="infobox alert alert-success" role="alert">
-            <p>Login Daten wurden gespeichert!</p>
-        </div><br><br>
-        {/if}
-
-        <form class="form-changeLoginData" method="post">
-            <div class="form-group">
-                <h5>Login Daten</h5>
-                <hr>
-                <label>altes Passwort</label> <br>
-                <input id="oldpassword" type="password" class="form-control" name="oldpassword" value="" placeholder="altes Passwort eingeben" required><br>
-                <label>neues Passwort</label> <br>
-                <input id="newpassword" type="password" class="form-control" name="newpassword" value="" placeholder="neues Passwort eingeben" required><br>
-                <label>neues Passwort wiederholen</label> <br>
-                <input id="newpasswordre" type="password" class="form-control" name="newpasswordre" value="" placeholder="neues Passwort wiederholen" required><br>
-                <button id="logindatabutton" type="" class="float-right btn btn-success">Login Einstellungen übernehmen</button>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        $('#logindatabutton').click(function () {
-            var pwold = document.getElementById('oldpassword').value;
-            var pwnew = document.getElementById('newpassword').value;
-            var pwnewre = document.getElementById('newpasswordre').value;
-            var equals = "false";
-
-            if(pwold != "" && pwnew != "" && pwnewre != ""){
-                if(pwnew == pwnewre) equals = "true";
-
-                console.log(equals +" beide pw gleich")
+                    });
+                }
+            })
+            $('#ticketdatabutton').click(function () {
+                var ticketu = document.getElementById('ticketurl').value;
+                var ticketd = document.getElementById('ticketdate').value;
 
                 $.post("{serverurl}/settings", {
-                    action: "changelogindata",
-                    oldpassword: MD5(pwold),
-                    newpassword: MD5(pwnew),
-                    equals: equals
+                    action: "changeticketdata",
+                    ticketurl: ticketu,
+                    ticketdate: ticketd
                 }, function(){
-
                 });
-            }
-        })
-
-        $('#ticketdatabutton').click(function () {
-            var ticketu = document.getElementById('ticketurl').value;
-            var ticketd = document.getElementById('ticketdate').value;
-
-            $.post("{serverurl}/settings", {
-                action: "changeticketdata",
-                ticketurl: ticketu,
-                ticketdate: ticketd
-            }, function(){
-            });
-        })
-    </script>
-
-</div>
+            })
+        </script>
+    </div>
 </body>
 </html>
