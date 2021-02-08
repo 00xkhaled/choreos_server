@@ -20,7 +20,7 @@ public class Feedback implements Cloneable{
     @Column(nullable = false)
     private String date;
     //incoming text from Feedback
-    @Column(nullable = false) private String text;
+    @Column(nullable = false, length = 512) private String text;
     //used to mark, when its already retrieved
     private boolean wasSeen;
 
