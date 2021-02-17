@@ -24,7 +24,7 @@ public class Properties {
     public String settingsservlet;
 
     public static String username= "choreos";
-    //pw: choreos MD5ecndoded
+    //pw: "choreos" MD5ecndoded
     public static String password = "4d120dff5bb8db9853e69e627c554bfe";
 
     /*

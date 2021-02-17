@@ -119,7 +119,7 @@ public class SettingsServlet extends HttpServlet {
         if(equals.contentEquals("true")){
             //newpassword and newpasswordrepeat is equal
             if(oldpassword.contentEquals(properties.password)){
-                //oldpassword equal password in PropertiesClass -> switching passwords
+                //oldpassword equals password in PropertiesClass -> switching passwords
                 properties.password = newpassword;
                 loginDataHasChanged = true;
                 log.info("LOGINDATA CHANGED");
