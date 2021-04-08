@@ -52,6 +52,8 @@ h3 {
 }
 
 .inactiv-scene {
+    text-align: center;
+    vertical-align: middle;
     color: white;
     background-color: #242424;
     margin: 0.5%;
@@ -61,6 +63,8 @@ h3 {
 }
 
 .inactiv-scene:hover {
+    text-align: center;
+    vertical-align: middle;
     color: white;
     background-color: #242424;
     margin: 0.5%;
@@ -69,6 +73,8 @@ h3 {
 }
 
 .activ-scene {
+    text-align: center;
+    vertical-align: middle;
     color: white;
     background-color: #28a745;
     margin: 0.5%;

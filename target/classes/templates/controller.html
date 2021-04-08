@@ -51,15 +51,15 @@
                 </script>
                 {/if}
                 {#for s in scenes}
-                {#if count == 3} <div class="row"> {/if}
-                {#if count == 6} <div class="row"> {/if}
+                {#if count == 4} <div class="row"> {/if}
                 {#if s.isActiv()}
                 <div id="scene{s.getId()}" class="col activ-scene">
                 {#else}
                 <div id="scene{s.getId()}" class="col inactiv-scene">
                 {/if}
                     <h5>{s.getName()}</h5>
-                    <p>{s.getDescription()}</p>
+
+                    <h3>{s.getDescription()}</h3>
                 </div>
                  <script>
                   $('#scene{s.getId()}').click(function () {
@@ -71,9 +71,8 @@
                         );
                   });
                   </script>
-                {#if count == 2} </div> {/if}
-                {#if count == 5} </div> {/if}
-                {#if count == 8} </div> {/if}
+                {#if count == 3} </div> {/if}
+
                 {#if count == scenes.size} <hr> </div> {/if}
                 {/for}
             </div> <!-- END -->

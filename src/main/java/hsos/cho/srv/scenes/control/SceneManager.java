@@ -103,6 +103,7 @@ public class SceneManager {
         //init Scene 2
         Scene c = new Scene(2, initiator.scname, initiator.scdescription);
         scenes.put(c.getId(), c);
+        /*
         //init Scene 3
         Scene d = new Scene(3, initiator.sdname, initiator.sddescription);
         scenes.put(d.getId(), d);
@@ -118,6 +119,7 @@ public class SceneManager {
         //init Scene 7
         Scene h = new Scene(7, initiator.shname, initiator.shdescription);
         scenes.put(h.getId(), h);
+        */
     }
 
     /**
